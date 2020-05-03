@@ -1,3 +1,5 @@
+addpath Classes
+
 global map driver
 
 car = Car(5,5,0);
