@@ -1,4 +1,4 @@
-classdef Map
+classdef Map < handle
     % Contains one car and an array of obstacles.
     
     properties
@@ -42,17 +42,14 @@ classdef Map
                 disp("You are dead!");
             end
 
-            plot(obj.get_all_shapes());  % plot on figure
-            
-            axis equal                   % other figure settings
-            xlim([0 obj.maxSize])
-            ylim([0 obj.maxSize])
-            drawnow
+            plot(obj.get_all_shapes());
+            obj.fig_config()
+
         end
             
     end
     
-    methods (Access = private)
+    methods (Access = protected)
         
         function shapes = get_obstacle_shapes(obj)
             % Returns an array of polyshape objects; each polyshape
@@ -70,6 +67,16 @@ classdef Map
             % obstacles.
             
             shapes = [obj.car.get_shape() obj.get_obstacle_shapes()];
+        end
+        
+        function fig_config(obj)
+            % commands that will set up and draw the figure
+            
+            axis equal
+            xlim([0 obj.maxSize])
+            ylim([0 obj.maxSize])
+            drawnow
+            
         end
         
     end

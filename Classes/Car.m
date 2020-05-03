@@ -41,11 +41,12 @@ classdef Car < Shape
         
         function move(obj, jump, rotation)
             % Moves the car the 'jump' length, in the angle 'rotation'.
-                        
+            
             obj.Rotation = obj.Rotation + rotation;
             obj.xPos = obj.xPos + (cos(obj.Rotation) * jump);
             obj.yPos = obj.yPos + (sin(obj.Rotation) * jump);
         end
+
         
     end
     
