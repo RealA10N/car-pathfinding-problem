@@ -43,15 +43,13 @@ classdef Car < Shape
             vertices = obj.vertices;
         end
         
-        function move(obj, rotation)
-            % Moves the car one step (obj.posJump) with the given rotation.
-            % rotation < 0: left
-            % rotation > 0: right
-            % rotation = 0: straight
+        function move(obj, steps, rotation)
+            % Moves the car one step (obj.posJump) with the given rotation
+            % and steps.
                         
             obj.Rotation = obj.Rotation + rotation;
-            obj.xPos = obj.xPos + (cos(obj.Rotation) * obj.posJumps);
-            obj.yPos = obj.yPos + (sin(obj.Rotation) * obj.posJumps);
+            obj.xPos = obj.xPos + ((cos(obj.Rotation) * obj.posJumps) * steps);
+            obj.yPos = obj.yPos + ((sin(obj.Rotation) * obj.posJumps) * steps);
         end
         
     end

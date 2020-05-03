@@ -50,8 +50,8 @@ classdef Map
             drawnow
         end
         
-        function move_car(obj, rotation)
-            obj.car.move(rotation)
+        function move_car(obj, steps, rotation)
+            obj.car.move(steps, rotation)
         end
             
     end

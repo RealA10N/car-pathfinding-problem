@@ -19,15 +19,19 @@ function KeyPressCb(~,event)
     switch event.Key
         
         case 'leftarrow'
-            map.move_car(pi/100);
+            map.move_car(1, pi/100);
             map.generate();
             
         case 'rightarrow'
-            map.move_car(-pi/100);
+            map.move_car(1, -pi/100);
             map.generate();
             
         case 'uparrow'
-            map.move_car(0);
+            map.move_car(1, 0);
+            map.generate();
+            
+        case 'downarrow'
+            map.move_car(-1, 0);
             map.generate();
             
     end
