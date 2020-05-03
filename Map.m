@@ -49,10 +49,6 @@ classdef Map
             ylim([0 obj.maxSize])
             drawnow
         end
-        
-        function move_car(obj, steps, rotation)
-            obj.car.move(steps, rotation)
-        end
             
     end
     

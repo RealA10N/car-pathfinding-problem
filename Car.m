@@ -14,10 +14,6 @@ classdef Car < Shape
         % Generates the shape of the car by default (Facing right)
         % The middle of the car is (0,0)
         defaultVertices = [2 1; 1 0; 2 -1; -2 -1; -2 1]
-        
-        % Discretization settings
-        posJumps = 0.1
-        
     end
     
     
@@ -43,13 +39,12 @@ classdef Car < Shape
             vertices = obj.vertices;
         end
         
-        function move(obj, steps, rotation)
-            % Moves the car one step (obj.posJump) with the given rotation
-            % and steps.
+        function move(obj, jump, rotation)
+            % Moves the car the 'jump' length, in the angle 'rotation'.
                         
             obj.Rotation = obj.Rotation + rotation;
-            obj.xPos = obj.xPos + ((cos(obj.Rotation) * obj.posJumps) * steps);
-            obj.yPos = obj.yPos + ((sin(obj.Rotation) * obj.posJumps) * steps);
+            obj.xPos = obj.xPos + (cos(obj.Rotation) * jump);
+            obj.yPos = obj.yPos + (sin(obj.Rotation) * jump);
         end
         
     end
