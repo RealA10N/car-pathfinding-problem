@@ -12,9 +12,9 @@ set(fig,'KeyPressFcn',@KeyPressCb);
 
 function KeyPressCb(~,event)
 
-    global map car
+    global map
 
-    %fprintf('key pressed: %s\n',event.Key);
+    fprintf('key pressed: %s\n',event.Key);
     
     switch event.Key
         
@@ -25,5 +25,10 @@ function KeyPressCb(~,event)
         case 'rightarrow'
             map.move_car(-pi/100);
             map.generate();
+            
+        case 'uparrow'
+            map.move_car(0);
+            map.generate();
+            
     end
 end
