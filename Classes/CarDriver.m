@@ -3,29 +3,34 @@ classdef CarDriver
     % and allows you to name them and move the car just by
     % using the "move" function and the name of the move.
     
-    properties (Access = protected)
+    properties (SetAccess = protected, GetAccess = public)
         directions
+        car
+    end
+    
+    properties (Constant)
+        one_step_rot = 45;
+        one_step_jump = 1;
     end
     
     methods
         function obj = CarDriver(car)
             
-            jumps = 0.1;
-            positive_rotation = 2;
-                        
-            obj.directions = struct();
-            obj.directions.uparrow = CarSingleMove(car, jumps, 0);
-            obj.directions.downarrow = CarSingleMove(car, -jumps, 0);
-            obj.directions.leftarrow = CarSingleMove(car, jumps, positive_rotation);
-            obj.directions.rightarrow = CarSingleMove(car, jumps, -positive_rotation);
+            obj.car = car;
             
+            obj.directions = struct();
+            obj.directions.uparrow    = CarSingleMove(obj, 0, obj.one_step_jump);
+            obj.directions.downarrow  = CarSingleMove(obj, 0, -obj.one_step_jump);
+            obj.directions.leftarrow  = CarSingleMove(obj, obj.one_step_rot, obj.one_step_jump);
+            obj.directions.rightarrow = CarSingleMove(obj, -obj.one_step_rot, obj.one_step_jump);
+
         end
         
         function move(obj, direction)
             % will move the car in the given direction, if exsistes.
             
             if (isfield(obj.directions, direction))
-                obj.directions.(direction).move();
+                obj.directions.(direction).move(obj.one_step_jump);
             end
             
         end

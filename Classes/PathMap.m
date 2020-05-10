@@ -32,10 +32,6 @@ classdef PathMap < Map
                 obj.plot_end()
             end
             
-            if(obj.check_if_end)
-                disp("YAY!")
-            end
-            
             hold off
             obj.fig_config()
             
