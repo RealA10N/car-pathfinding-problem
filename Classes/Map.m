@@ -41,9 +41,12 @@ classdef Map < handle
             if(obj.checkDead())
                 disp("You are dead!");
             end
-
-            plot(obj.get_all_shapes());
+            
+            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+            hold on
+            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 1);
             obj.fig_config()
+            hold off
 
         end
             

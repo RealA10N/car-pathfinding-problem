@@ -20,9 +20,11 @@ classdef PathMap < Map
         
         
         function generate(obj)
+            % Shows & Updates the graph!
             
-            plot(obj.get_all_shapes());  % plot car & obstacles
+            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
             hold on
+            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 0.5);
             
             % plot start & end points
             if(~isempty(obj.startPoint))
@@ -30,6 +32,10 @@ classdef PathMap < Map
             end
             if(~isempty(obj.endPoint))
                 obj.plot_end()
+            end
+            
+            if(obj.checkDead())
+                disp("You are dead!");
             end
             
             hold off
