@@ -3,7 +3,7 @@ classdef Car < Shape
     % The car's position depends on 3 properties:
     % x position, y position and rotation.
     
-    properties
+    properties (SetAccess = protected, GetAccess = public)
         % Properties of the car
         xPos
         yPos
@@ -62,6 +62,36 @@ classdef Car < Shape
             obj.xPos = obj.xPos + x;
             obj.yPos = obj.yPos + y;
         
+        end
+        
+        function move_8directions(obj, length)
+            % Moves the car only in jumps of 45deg.
+            % if car is rotated on the axis, will jump
+            % only on one of the axis. If the car faced
+            % in an 45deg angle from the axis, the car
+            % will jump on both of them to the faced direction.
+            
+            rotation = mod(obj.Rotation, 360);
+            
+            % Y axis
+            if (rotation > 0 && rotation < 180)
+                % if facing up
+                obj.yPos = obj.yPos + length;
+            elseif (rotation > 180)
+                % if facing down
+                obj.yPos = obj.yPos - length;
+            end
+            
+            % X axis
+            if (rotation > 90 && rotation < 270)
+                % if facing left
+                obj.xPos = obj.xPos - length;
+            elseif (rotation < 90 || rotation > 270)
+                % if facing right
+                obj.xPos = obj.xPos + length;
+            end
+                
+            
         end
         
         function teleport(obj, xPos, yPos, rotation)
