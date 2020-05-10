@@ -2,13 +2,15 @@ addpath General BFS
 
 global map driver
 
-car = SearchCar(5,5,0);
+car = SearchCar(3,3,90);
 driver = CarDriver(car);
 
-obstacle = Obstacle(10,10,5);
-obstacle2 = Obstacle(15,15,2);
+obstacle = Obstacle(5,5,5);
+obstacle2 = Obstacle(12,15,2);
+obstacle3 = Obstacle(2,12,6);
 
-map = PathMap(car, [obstacle obstacle2]);
+
+map = PathMap(car, [obstacle obstacle2 obstacle3]);
 
 fig = figure;
 
@@ -28,15 +30,19 @@ while(~queue.isEmpty())
     
     if (~curPos.ifVisited())
         
-        curPos.teleport();  % teleports the car to the x position
+        curPos.teleport();
         
-        % map.generate()
+        if(map.checkDead())
+            continue
+        end
         
         if (map.check_if_end())
             map.show_path(curPos);
             break
         end
 
+        map.generate()
+        
         for k=1:length(all_directions)
             cur_direction = all_directions{k};
             curPos.teleport()
