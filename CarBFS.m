@@ -2,7 +2,7 @@ addpath General BFS
 
 global map driver
 
-car = Car(5,5,0);
+car = SearchCar(5,5,0);
 driver = CarDriver(car);
 
 obstacle = Obstacle(10,10,5);
@@ -17,18 +17,19 @@ map.setend(ginput(1))
 map.generate()
 
 Visited = zeros(0, 3);
-Q = [car.xPos, car.yPos, car.Rotation;];  % Queue
+queue = PositionQueue();
+queue.addPosition(car.getCurSearchPosition());
 
 all_directions = fieldnames(driver.directions);
 
-while(~isempty(Q))
+while(~queue.isEmpty())
 
-    x = Q(1,:);
-    Q(1,:) = [];
+    curPos = queue.pullOut();
     
-    if (~ismember(x, Visited, 'rows'))
+    if (~curPos.ifVisited())
         
-        car.teleport(x(1), x(2), x(3));
+        curPos.teleport();  % teleports the car to the x position
+        
         if (map.check_if_end())
             disp("end!")
             break
@@ -39,16 +40,15 @@ while(~isempty(Q))
         for k=1:length(all_directions)
             cur_direction = all_directions{k};
             driver.directions.(cur_direction).move()
-            new_pos = [round(car.xPos,1), round(car.yPos,1), round(car.Rotation,1)];
+            new_pos = CarSearchPosition(car, car.xPos, car.yPos, car.Rotation);
+            new_pos.setLastPos(curPos)
 
-            % Checking if visited same place
-            if (~ismember(new_pos, Visited, 'rows'))
-                % if not
-                Q = [Q; new_pos;];
+            if (~queue.checkInQueue(new_pos))
+                queue.addPosition(new_pos)
             end
         end
     
-        Visited = [Visited; x];
+        curPos.markVisited();
         
     end
 end
