@@ -14,7 +14,7 @@ classdef CarSingleMove
             obj.length = length;
         end
         
-        function move(obj, length)
+        function move(obj)
             % Moves the car in the given direction,
             % and with the given length
             obj.driver.car.rotate(obj.rotation)
