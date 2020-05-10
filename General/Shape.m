@@ -2,7 +2,7 @@ classdef Shape < handle
     % Defines every shape in the program
     % Inherets from this class: Car, Obstacle
     
-    properties (Access=protected)
+    properties (SetAccess=protected)
         vertices
         % 2 Column matrix containing [x,y]
         % of each vertex in the shape in order.
@@ -27,4 +27,3 @@ classdef Shape < handle
         
     end
 end
-

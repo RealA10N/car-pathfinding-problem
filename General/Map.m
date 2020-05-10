@@ -21,19 +21,31 @@ classdef Map < handle
         
         
         function boolean = checkDead(obj)
-            % Returns true if the car is touching on or more obstacles
+            % Returns true if the car should be "dead".
+            boolean = (obj.checkObstacleCarIntersect() || obj.checkIfOutOfGraph());
+        end
+        
+        function boolean = checkObstacleCarIntersect(obj)
+            % Returns true if the car is touching one or more obstacles.
             
             overlapTable = overlaps(obj.get_all_shapes());
             
-            boolean = 0;
+            boolean = false;
             for i = 2:length(overlapTable)
                 if(overlapTable(1, i) == 1)
-                    boolean = 1;
+                    boolean = true;
+                    return
                 end
             end
         
         end
         
+        function boolean = checkIfOutOfGraph(obj)
+            % Returns true if the car touches the borders of the graph.
+            boolean = (...
+            any(any(obj.car.vertices > obj.maxSize)) || ...
+            any(any(obj.car.vertices < 0)));
+        end
         
         function generate(obj)
             % Shows & Updates the graph!
@@ -95,13 +107,3 @@ classdef Map < handle
         
     end
 end
-
-
-
-
-
-
-
-
-
-
