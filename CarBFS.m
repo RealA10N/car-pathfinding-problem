@@ -1,4 +1,4 @@
-addpath Classes
+addpath General BFS
 
 global map driver
 

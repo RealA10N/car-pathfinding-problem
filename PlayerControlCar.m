@@ -1,4 +1,4 @@
-addpath Classes
+addpath General
 
 global map driver
 
