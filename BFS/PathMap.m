@@ -22,24 +22,32 @@ classdef PathMap < Map
         function generate(obj)
             % Shows & Updates the graph!
             
-            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+            obj.plot_obstacles()
             hold on
-            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 0.5);
-            
-            % plot start & end points
-            if(~isempty(obj.startPoint))
-                obj.plot_start()
-            end
-            if(~isempty(obj.endPoint))
-                obj.plot_end()
-            end
-            
-            if(obj.checkDead())
-                disp("You are dead!");
-            end
+            obj.plot_car()
+            obj.plot_start()
+            obj.plot_end()
             
             hold off
             obj.fig_config()
+            
+        end
+        
+        function show_path(obj, position)
+            % Shows the postions from the start postion to the given one.
+            
+            obj.plot_obstacles()
+            hold on
+            obj.plot_car()
+            
+            while(position.ifLastPostion())
+                position = position.lastPos;
+                position.teleport();
+                plot(obj.car.get_shape(), 'FaceColor', '#f8ea79', 'FaceAlpha', 0.1);
+            end
+            
+            hold off
+            obj.fig_config();
             
         end
         
@@ -59,15 +67,21 @@ classdef PathMap < Map
     methods (Access = private)
         
         function plot_start(obj)
-            point = plot(obj.startPoint(1), obj.startPoint(2), 'square black');
-            point.MarkerFaceColor = 'blue';
-            point.MarkerSize = 10;
+            % Puts the start point (if given) on the graph.
+            if(~isempty(obj.startPoint))
+                point = plot(obj.startPoint(1), obj.startPoint(2), 'square black');
+                point.MarkerFaceColor = 'blue';
+                point.MarkerSize = 10;
+            end
         end
         
         function plot_end(obj)
-            point = plot(obj.endPoint(1), obj.endPoint(2), 'pentagram black');
-            point.MarkerFaceColor = 'green';
-            point.MarkerSize = 10;
+            % Puts the end point (if given) on the graph.
+            if(~isempty(obj.endPoint))
+                point = plot(obj.endPoint(1), obj.endPoint(2), 'pentagram black');
+                point.MarkerFaceColor = 'green';
+                point.MarkerSize = 10;
+            end
         end
     
     end

@@ -1,4 +1,4 @@
-classdef CarSearchPosition
+classdef CarSearchPosition < handle
     % Describes a position of the car
     % Used in path searching algorithems
     % also, saves a pointer to the position before this one
@@ -42,13 +42,13 @@ classdef CarSearchPosition
         end
         
         function visited = ifVisited(obj)
-            % returns true if position is fully explored
+            % Returns true if position is fully explored
             % if not, returns false
             visited = obj.visited;
         end
         
         function boolean = ifEqual(obj, positionObj)
-            % returns true if the parameter object has the
+            % Returns true if the parameter object has the
             % same property values as this one.
             
             boolean = (obj.xPos == positionObj.xPos) ...
@@ -61,6 +61,12 @@ classdef CarSearchPosition
             % used to trace back.
             
             obj.lastPos = positionObj;
+        end
+        
+        function boolean = ifLastPostion(obj)
+            % Returns true if there is a "last postion" value.
+            
+            boolean = ~isempty(obj.lastPos);
         end
         
     end

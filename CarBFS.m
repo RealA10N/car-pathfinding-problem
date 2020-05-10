@@ -30,12 +30,12 @@ while(~queue.isEmpty())
         
         curPos.teleport();  % teleports the car to the x position
         
+        %map.generate()
+        
         if (map.check_if_end())
-            disp("end!")
+            map.show_path(curPos);
             break
         end
-
-        map.generate()
 
         for k=1:length(all_directions)
             cur_direction = all_directions{k};
@@ -52,5 +52,3 @@ while(~queue.isEmpty())
         
     end
 end
-
-map.generate()

@@ -42,11 +42,12 @@ classdef Map < handle
                 disp("You are dead!");
             end
             
-            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+            obj.plot_obstacles()
             hold on
-            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 1);
-            obj.fig_config()
+            obj.plot_car()
             hold off
+
+            obj.fig_config()
 
         end
             
@@ -70,6 +71,16 @@ classdef Map < handle
             % obstacles.
             
             shapes = [obj.car.get_shape() obj.get_obstacle_shapes()];
+        end
+        
+        function plot_obstacles(obj)
+            % Puts the obstacles on the graph.
+            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+        end
+        
+        function plot_car(obj)
+            % Puts the car on the graph.
+            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 1);
         end
         
         function fig_config(obj)
