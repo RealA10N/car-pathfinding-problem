@@ -11,7 +11,7 @@ classdef CarDriver
         function obj = CarDriver(car)
             
             jumps = 0.1;
-            positive_rotation = pi/100;
+            positive_rotation = 2;
                         
             obj.directions = struct();
             obj.directions.uparrow = CarSingleMove(car, jumps, 0);

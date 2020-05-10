@@ -41,10 +41,34 @@ classdef Car < Shape
         
         function move(obj, jump, rotation)
             % Moves the car the 'jump' length, in the angle 'rotation'.
-            
+            % Notice that the car is first rotated, and only then moved.
+            obj.rotate(rotation)
+            obj.jump(jump)
+        end
+        
+        function rotate(obj, rotation)
+            % Rotates the car in the angle 'rotation'.
             obj.Rotation = obj.Rotation + rotation;
-            obj.xPos = obj.xPos + (cos(obj.Rotation) * jump);
-            obj.yPos = obj.yPos + (sin(obj.Rotation) * jump);
+        end
+        
+        function jump(obj, length)
+            % Moves the car forward with given length.
+            obj.xPos = obj.xPos + (cosd(obj.Rotation) * length);
+            obj.yPos = obj.yPos + (sind(obj.Rotation) * length);
+        end
+        
+        function move_xy(obj, x, y)
+            % Moves the car in 2d
+            obj.xPos = obj.xPos + x;
+            obj.yPos = obj.yPos + y;
+        
+        end
+        
+        function teleport(obj, xPos, yPos, rotation)
+            % Moves the car to the given position.
+            obj.Rotation = rotation;
+            obj.xPos = xPos;
+            obj.yPos = yPos;
         end
 
         
@@ -57,10 +81,10 @@ classdef Car < Shape
             % in the current position (x, y, rotation) of the car
             
             r = sqrt(sum(startVertex.^2));
-            extraAngle = atan2(startVertex(1), startVertex(2));
+            extraAngle = atan2d(startVertex(1), startVertex(2));
             
-            x = (sin(extraAngle - obj.Rotation) * r) + obj.xPos;
-            y = (cos(extraAngle - obj.Rotation) * r) + obj.yPos;
+            x = (sind(extraAngle - obj.Rotation) * r) + obj.xPos;
+            y = (cosd(extraAngle - obj.Rotation) * r) + obj.yPos;
         end
         
     end
