@@ -30,7 +30,7 @@ classdef CarDriver
             % will move the car in the given direction, if exsistes.
             
             if (isfield(obj.directions, direction))
-                obj.directions.(direction).move(obj.one_step_jump);
+                obj.directions.(direction).move();
             end
             
         end
