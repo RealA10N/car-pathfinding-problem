@@ -10,9 +10,10 @@ classdef Shape < handle
     
     methods
 
-        function update(obj)
+        function vertices = update(obj)
             % Some shapes will need a function to update their
             % vertices property before using "get_shape()"
+            vertices = obj.vertices;
         end
         
         function shape = get_shape(obj)
