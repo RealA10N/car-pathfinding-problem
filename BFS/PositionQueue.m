@@ -30,7 +30,7 @@ classdef PositionQueue < handle
         function boolean = isEmpty(obj)
             % returns true if the queue is empty
             % and false if contains at least one position.
-            boolean = isempty(obj.queue);
+            boolean = (isempty(obj.queue) || obj.pullPosition >= length(obj.queue));
         end
         
         function boolean = checkInQueue(obj, positionObj)
