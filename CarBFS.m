@@ -49,7 +49,7 @@ while(~queue.isEmpty())
             driver.directions.(cur_direction).move()
             new_pos = CarSearchPosition(car, car.xPos, car.yPos, car.Rotation);
             new_pos.setLastPos(curPos)
-            if (~queue.checkInQueue(new_pos))
+            if (~queue.checkIfEncountered(new_pos))
                 queue.addPosition(new_pos)
             end
         end
