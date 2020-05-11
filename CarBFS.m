@@ -5,7 +5,7 @@ global map driver
 car = SearchCar(3,3,90);
 driver = CarDriver(car);
 
-obstacle = Obstacle(5,5,5);
+obstacle = Obstacle(5,5,4);
 obstacle2 = Obstacle(12,15,2);
 obstacle3 = Obstacle(2,12,6);
 
@@ -58,3 +58,5 @@ while(~queue.isEmpty())
         
     end
 end
+
+disp("End")
