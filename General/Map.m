@@ -54,9 +54,9 @@ classdef Map < handle
                 disp("You are dead!");
             end
             
-            obj.plot_obstacles()
-            hold on
             obj.plot_car()
+            hold on
+            obj.plot_obstacles()
             hold off
 
             obj.fig_config()
@@ -87,12 +87,18 @@ classdef Map < handle
         
         function plot_obstacles(obj)
             % Puts the obstacles on the graph.
-            plot(obj.get_obstacle_shapes(), 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+            shapes = obj.get_obstacle_shapes();
+            if (~isempty(shapes))
+                plot(shapes, 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+            end
         end
         
         function plot_car(obj)
             % Puts the car on the graph.
-            plot(obj.car.get_shape(), 'FaceColor', '#00dfcb', 'FaceAlpha', 1);
+            shapes = obj.car.get_shape();
+            if (~isempty(shapes))
+                plot(shapes, 'FaceColor', '#00dfcb', 'FaceAlpha', 1);
+            end
         end
         
         function fig_config(obj)
@@ -101,7 +107,7 @@ classdef Map < handle
             axis equal
             xlim([0 obj.maxSize])
             ylim([0 obj.maxSize])
-            drawnow
+            drawnow limitrate
             
         end
         

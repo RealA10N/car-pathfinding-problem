@@ -22,9 +22,9 @@ classdef PathMap < Map
         function generate(obj)
             % Shows & Updates the graph!
             
-            obj.plot_obstacles()
-            hold on
             obj.plot_car()
+            hold on
+            obj.plot_obstacles()
             obj.plot_start()
             obj.plot_end()
             
@@ -36,9 +36,11 @@ classdef PathMap < Map
         function show_path(obj, position)
             % Shows the postions from the start postion to the given one.
             
-            obj.plot_obstacles()
-            hold on
             obj.plot_car()
+            hold on
+            obj.plot_obstacles()
+            obj.plot_start()
+            obj.plot_end()
             
             while(position.ifLastPostion())
                 position = position.lastPos;
