@@ -31,6 +31,11 @@ classdef CarSearchPosition < handle
             % those can be set by seperate methods!
         end
         
+        function [ xyrot ] = getPosition(obj)
+            % Returns a 3d position of the car.
+            xyrot = [obj.xPos obj.yPos obj.Rotation];
+        end
+        
         function teleport(obj)
             % Teleports the car to the saved position
             obj.car.teleport(obj.xPos, obj.yPos, obj.Rotation)
