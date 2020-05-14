@@ -1,22 +1,26 @@
-addpath General BFS
+addpath General Search
 
 global map driver
 
 car = SearchCar(3,3,90);
 driver = CarDriver(car);
 
-obstacle = Obstacle(5,5,4);
-obstacle2 = Obstacle(12,15,2);
-obstacle3 = Obstacle(2,12,6);
+% obstacle = Obstacle(5,5,4);
+% obstacle2 = Obstacle(12,15,2);
+% obstacle3 = Obstacle(2,12,6);
 
+obstacle = RectangleObstacle(1, 7, 12, 11);
+obstacle2 = RectangleObstacle(14, 12, 20, 17);
+obstacle3 = RectangleObstacle(3, 15, 8, 17);
 
 map = PathMap(car, [obstacle obstacle2 obstacle3]);
 
 fig = figure;
 
-map.generate()
-map.setend(ginput(1))
-map.generate()
+%map.generate()
+% map.setend(ginput(1))
+map.setend([17 10])
+%map.generate()
 
 Visited = zeros(0, 3);
 queue = PositionQueue();
@@ -24,6 +28,7 @@ queue.addPosition(car.getCurSearchPosition());
 
 all_directions = fieldnames(driver.directions);
 
+tic
 while(~queue.isEmpty())
 
     curPos = queue.pullOut();
@@ -40,8 +45,8 @@ while(~queue.isEmpty())
             map.show_path(curPos);
             break
         end
-
-        map.generate()
+        
+        map.show_path(curPos)
         
         for k=1:length(all_directions)
             cur_direction = all_directions{k};
@@ -58,5 +63,4 @@ while(~queue.isEmpty())
         
     end
 end
-
-disp("End")
+toc
