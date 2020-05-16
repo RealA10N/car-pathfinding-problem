@@ -1,4 +1,5 @@
-addpath General Search Search/BreadthFirst
+addpath General Search
+addpath Search/BreadthFirst
 
 % Create car and car-driver
 car = SearchCar(3,3,90);  % default start position
@@ -15,12 +16,12 @@ map = PathMap(car, [obstacle obstacle2 obstacle3]);
 map.generate()  % Show the map
 
 % map.setend(ginput(1))  % User input end point
-map.setend([10 14])  % Constant goal point
+map.setend([17 10])  % Constant goal point
 
 map.generate()  % Show the map with end point
 
 % Create the point queue, add the starting point
-queue = PositionQueue();
+queue = BreadthFirstPositionQueue();
 queue.addPosition(car.getCurSearchPosition());
 
 % Get all the move directions from car-driver
@@ -44,7 +45,7 @@ while(~queue.isEmpty())
         break
     end
 
-    map.show_path(curPos)  % Show the search process
+    % map.show_path(curPos)  % Show the search process
     
     % For every move avalible from current position
     for k=1:length(all_directions)
@@ -59,9 +60,7 @@ while(~queue.isEmpty())
         new_pos.setLastPos(curPos)
         
         % Add to queue if never visited
-        if (~queue.checkIfEncountered(new_pos))
-            queue.addPosition(new_pos)
-        end
+        queue.addPosition(new_pos)
     end
 
 end

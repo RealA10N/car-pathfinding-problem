@@ -1,13 +1,18 @@
-classdef PositionQueue < handle
+classdef (Abstract) PositionQueue < handle
     % Stores an array of car positions.
     % Knows how to compare them, sort them,
     % and pull in and out positions.
     
-    properties (Access = public)
+    properties %(Access = protected)
         queue   % The queue
         queue_matrix
         pulled  % Position that were queued and pulled out
         pulled_matrix
+    end
+    
+    methods (Abstract)
+        addPosition(obj, positionObj)
+        nextPos = pullOut(obj)
     end
     
     methods
@@ -20,39 +25,38 @@ classdef PositionQueue < handle
             obj.pulled_matrix = [];
         end
         
-        function addPosition(obj, positionObj)
-            % Adds a position object to the queue
-            obj.queue = [obj.queue positionObj];
-            obj.queue_matrix = [obj.queue_matrix; positionObj.getPosition()];
-        end
-        
-        function nextPos = pullOut(obj)
-            % Pulls out the next position in order
-            % and removes it from the queue.
-            % The pulled out point is added to the "pulledPoints" array
-            
-            obj.pulled = [obj.pulled obj.queue(1)];  % Add item to pulled list
-            obj.pulled_matrix = [obj.pulled_matrix; obj.queue_matrix(1,:)];
-            
-            nextPos = obj.queue(1);
-            
-            obj.queue(1) = []; % Remove item from queue list
-            obj.queue_matrix(1,:) = [];
-        end
-        
         function boolean = isEmpty(obj)
             % Returns true if the queue is empty
             % and false if contains at least one position.
             boolean = isempty(obj.queue);
         end
         
+        function boolean = isPulledEmpty(obj)
+            % returns true if not even one position was pulled out from the
+            % queue.
+            
+            boolean = isempty(obj.pulled);
+        end
+        
         function boolean = checkInQueue(obj, positionObj)
-            % returns true if position object already in the queue.           
+            % returns true if position object already in the queue.
+            
+            if (obj.isEmpty())
+                boolean = false;
+                return
+            end
+            
             boolean = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
         end
         
         function boolean = checkIfPulled(obj, positionObj)
             % Returns true if the given object appers in the pulled list.
+            
+            if (obj.isPulledEmpty())
+                boolean = false;
+                return
+            end
+            
             boolean = ismember(positionObj.getPosition(), obj.pulled_matrix, 'rows');
         end
         
@@ -62,6 +66,17 @@ classdef PositionQueue < handle
             
             boolean = obj.checkInQueue(positionObj) ...
                 || obj.checkIfPulled(positionObj);
+        end
+        
+        function removeFromQueue(obj, positionObj)
+            % Removes the given point from the queue, if already in queue.
+            
+            [member, index] = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
+            
+            if(member)
+                obj.queue(index) = [];
+                obj.queue_matrix(index,:) = [];
+            end
         end
         
     end

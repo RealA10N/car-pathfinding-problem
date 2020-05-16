@@ -16,11 +16,17 @@ classdef DijkstraPosition < CarSearchPosition
             obj.costToPosition = Inf;            
         end
         
+        function boolean = ifCostLower(obj, cost)
+            % Returns true if the given point cost is lower
+            % than the saved one.
+            boolean = obj.costToPosition > cost;
+        end
+        
         function tryUpdateCost(obj, cost)
             % if the given cost to the position is lower
             % then the current one saved, it will be updated.
             
-            if (obj.costToPosition > cost)
+            if (obj.ifCostLower(cost))
                 obj.costToPosition = cost;
             end
         end
