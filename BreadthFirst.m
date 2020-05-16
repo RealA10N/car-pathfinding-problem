@@ -1,4 +1,4 @@
-addpath General Search
+addpath General Search Search/BreadthFirst
 
 global map driver
 
@@ -15,8 +15,6 @@ obstacle3 = RectangleObstacle(3, 15, 8, 17);
 
 map = PathMap(car, [obstacle obstacle2 obstacle3]);
 
-fig = figure;
-
 %map.generate()
 % map.setend(ginput(1))
 map.setend([17 10])
@@ -32,35 +30,30 @@ tic
 while(~queue.isEmpty())
 
     curPos = queue.pullOut();
+    curPos.markVisited();
+    curPos.teleport();
     
-    if (~curPos.ifVisited())
-        
-        curPos.teleport();
-        
-        if(map.checkDead())
-            continue
-        end
-        
-        if (map.check_if_end())
-            map.show_path(curPos);
-            break
-        end
-        
-        map.show_path(curPos)
-        
-        for k=1:length(all_directions)
-            cur_direction = all_directions{k};
-            curPos.teleport()
-            driver.directions.(cur_direction).move()
-            new_pos = CarSearchPosition(car, car.xPos, car.yPos, car.Rotation);
-            new_pos.setLastPos(curPos)
-            if (~queue.checkIfEncountered(new_pos))
-                queue.addPosition(new_pos)
-            end
-        end
-    
-        curPos.markVisited();
-        
+    if(map.checkDead())
+        continue
     end
+
+    if (map.check_if_end())
+        map.show_path(curPos);
+        break
+    end
+
+    % map.show_path(curPos)
+
+    for k=1:length(all_directions)
+        cur_direction = all_directions{k};
+        curPos.teleport()
+        driver.directions.(cur_direction).move()
+        new_pos = CarSearchPosition(car, car.xPos, car.yPos, car.Rotation);
+        new_pos.setLastPos(curPos)
+        if (~queue.checkIfEncountered(new_pos))
+            queue.addPosition(new_pos)
+        end
+    end
+
 end
 toc
