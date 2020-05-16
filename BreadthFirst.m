@@ -1,34 +1,36 @@
 addpath General Search Search/BreadthFirst
 
-global map driver
-
-car = SearchCar(3,3,90);
+% Create car and car-driver
+car = SearchCar(3,3,90);  % default start position
 driver = CarDriver(car);
 
-% obstacle = Obstacle(5,5,4);
-% obstacle2 = Obstacle(12,15,2);
-% obstacle3 = Obstacle(2,12,6);
-
+% Create obstacles
 obstacle = RectangleObstacle(1, 7, 12, 11);
 obstacle2 = RectangleObstacle(14, 12, 20, 17);
 obstacle3 = RectangleObstacle(3, 15, 8, 17);
 
+% Create map with car and obstacles
 map = PathMap(car, [obstacle obstacle2 obstacle3]);
 
-%map.generate()
-% map.setend(ginput(1))
-map.setend([17 10])
-%map.generate()
+map.generate()  % Show the map
 
-Visited = zeros(0, 3);
+% map.setend(ginput(1))  % User input end point
+map.setend([10 14])  % Constant goal point
+
+map.generate()  % Show the map with end point
+
+% Create the point queue, add the starting point
 queue = PositionQueue();
 queue.addPosition(car.getCurSearchPosition());
 
+% Get all the move directions from car-driver
 all_directions = fieldnames(driver.directions);
+
 
 tic
 while(~queue.isEmpty())
-
+    
+    % Pull out position from the queue
     curPos = queue.pullOut();
     curPos.markVisited();
     curPos.teleport();
@@ -42,14 +44,21 @@ while(~queue.isEmpty())
         break
     end
 
-    % map.show_path(curPos)
-
+    map.show_path(curPos)  % Show the search process
+    
+    % For every move avalible from current position
     for k=1:length(all_directions)
+        
+        % Move car to the given direction
         cur_direction = all_directions{k};
         curPos.teleport()
         driver.directions.(cur_direction).move()
-        new_pos = CarSearchPosition(car, car.xPos, car.yPos, car.Rotation);
+        
+        % Generate car position
+        new_pos = car.getCurSearchPosition();
         new_pos.setLastPos(curPos)
+        
+        % Add to queue if never visited
         if (~queue.checkIfEncountered(new_pos))
             queue.addPosition(new_pos)
         end
