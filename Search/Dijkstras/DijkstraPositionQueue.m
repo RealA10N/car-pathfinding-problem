@@ -1,6 +1,7 @@
 classdef DijkstraPositionQueue < PositionQueue
-    % Saves the given car position,
-    % +the total cost from the start position.
+    % Stores multiple postions of the car, and has methods to add positions
+    % and pull-out position from the queue (those methods follow the
+    % Dijkstra's algorithm!)
     
     properties (Access = protected)
         costArray

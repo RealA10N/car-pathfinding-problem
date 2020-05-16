@@ -1,8 +1,9 @@
 classdef DijkstraPosition < CarSearchPosition
-    % Saves the position of the car, with an edition to
-    % use Dikstra's search algorithem.
+    % Saves the position of the car and the cost from the start position
+    % to this one. Has an edition to be used in Dikstra's search
+    % algorithm.
     
-    properties (SetAccess = protected, GetAccess = public)
+    properties (Access = protected)
         costToPosition  % The total cost from the start position
     end
     

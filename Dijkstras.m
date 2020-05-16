@@ -1,8 +1,11 @@
-% The current dijkstra algorithem will run like breadth-first,
-% because the cost of each road is 1.
+% The current dijkstra algorithm will run like breadth-first,
+% because the cost of each road is 1. Note that this algorithm won't
+% necessery give you the optimal path, and will stop on the first position
+% where the car touches the end-point (this happens because the end
+% position is a point on the map and not a state of the car).
 
-
-addpath General Search Search/Dijkstras
+addpath General Search
+addpath Search/Dijkstras
 
 car = SearchCar(3,3,90);
 driver = CarDriver(car);
@@ -12,7 +15,6 @@ obstacle2 = RectangleObstacle(14, 12, 20, 17);
 obstacle3 = RectangleObstacle(3, 15, 8, 17);
 
 map = PathMap(car, [obstacle obstacle2 obstacle3]);
-
 
 map.generate()
 
