@@ -74,6 +74,24 @@ classdef CarSearchPosition < handle
             boolean = ~isempty(obj.lastPos);
         end
         
+        function pos = getLastPos(obj)
+            % Returns a CarPosition object that came before this one.
+            pos = obj.lastPos;
+        end
+        
+        function newobj = toDijkstraPosition(obj)
+            % returns a new DijkstraPosition object
+            % that has the same property values as this one.
+            
+            newobj = DijkstraPosition(obj.car, obj.xPos, obj.yPos, obj.Rotation);
+            
+            newobj.setLastPos(obj.getLastPos())
+            
+            if (obj.ifVisited)
+                newobj.markVisited()
+            end
+        end
+        
     end
 end
 
