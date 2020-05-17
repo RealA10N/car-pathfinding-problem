@@ -59,6 +59,7 @@ while(~queue.isEmpty())
         % Generate car position
         new_pos = car.convertToDijkstraPosition();
         new_pos.setLastPos(curPos)
+        new_pos.tryUpdateCost(curPos.getCost() + 1)
         
         % Adds the position to the queue. only if the cost of the current
         % position is the lowest!
