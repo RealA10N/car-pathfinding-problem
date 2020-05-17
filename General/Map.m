@@ -28,14 +28,14 @@ classdef Map < handle
         function boolean = checkObstacleCarIntersect(obj)
             % Returns true if the car is touching one or more obstacles.
             
-            overlapTable = overlaps(obj.get_all_shapes());
+            intersectionsCount = sum(overlaps(obj.get_car_shape(), obj.get_obstacle_shapes()));
             
-            boolean = false;
-            for i = 2:length(overlapTable)
-                if(overlapTable(1, i) == 1)
-                    boolean = true;
-                    return
-                end
+            if (intersectionsCount > 0)
+                % If car intersects with at least one obstacle
+                boolean = true;
+            else
+                % If the car is safe
+                boolean = false;
             end
         
         end
@@ -77,12 +77,17 @@ classdef Map < handle
             end
         end
         
+        function shape = get_car_shape(obj)
+            % Returns the polyshape of the car.
+            shape = obj.car.get_shape();
+        end
+        
         function shapes = get_all_shapes(obj)
             % Returns an array of polyshape objects; the first one
             % represents the car, the others represent different
             % obstacles.
             
-            shapes = [obj.car.get_shape() obj.get_obstacle_shapes()];
+            shapes = [obj.get_car_shape() obj.get_obstacle_shapes()];
         end
         
         function plot_obstacles(obj)
