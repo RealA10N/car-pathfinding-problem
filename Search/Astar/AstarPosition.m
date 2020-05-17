@@ -13,11 +13,12 @@ classdef AstarPosition < DijkstraPosition
             % Calls "DijkstraPosition" constructor
             % and sets the cost of the position to infinity.
             
-            if (nargin < 5)
-                cost = Inf;
-            end
+            obj = obj@DijkstraPosition(car, xPos, yPos, Rotation);
             
-            obj = obj@DijkstraPosition(car, xPos, yPos, Rotation, cost);
+            if (nargin > 5)
+                obj.tryUpdateCost(cost);
+            end
+
             obj.setEndGoal(endPoint);
         end
         
