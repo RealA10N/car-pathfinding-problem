@@ -1,22 +1,9 @@
-classdef DijkstraPositionQueue < PositionQueue
+classdef AstarPositionQueue < DijkstraPositionQueue
     % Stores multiple postions of the car, and has methods to add positions
     % and pull-out position from the queue (those methods follow the
-    % Dijkstra's algorithm!)
-    
-    properties (Access = protected)
-        costArray
-    end
-    
+    % A* algorithm!)
     
     methods
-        
-        function obj = DijkstraPositionQueue()
-            % Calls "PositionQueue" constructor
-            % Creates new cost array, for more efficient search.
-            
-            obj = obj@PositionQueue();
-            obj.costArray = [];
-        end
         
         function addPosition(obj, positionObj)
             % Adds a position object to the queue
@@ -29,7 +16,7 @@ classdef DijkstraPositionQueue < PositionQueue
                 % if already visited same position -> checks cost and
                 % updates if needed!
                 
-                if(positionObj.getTotalCost() < positionFromQueue.getTotalCost())
+                if(positionObj.getCost() < positionFromQueue.getCost())
                     obj.removeFromQueue(positionFromQueue);
                     obj.literallyAddPosition(positionObj);
                 end
@@ -46,6 +33,10 @@ classdef DijkstraPositionQueue < PositionQueue
             
             lowest_cost = min(obj.costArray);
             lowest_index = find(obj.costArray == lowest_cost);
+            
+            if (length(lowest_index) > 1)
+                lowest_index = lowest_index(1);
+            end
             
             obj.pulled = [obj.pulled obj.queue(lowest_index)];  % Add item to pulled list
             obj.pulled_matrix = [obj.pulled_matrix; obj.queue_matrix(lowest_index,:)];
