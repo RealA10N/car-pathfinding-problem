@@ -9,12 +9,18 @@ classdef DijkstraPosition < CarSearchPosition
     
     methods
         
-        function obj = DijkstraPosition(car, xPos, yPos, Rotation)
+        function obj = DijkstraPosition(car, xPos, yPos, Rotation, cost)
             % Calls "CarSearchPosition" constructor
             % and sets the cost of the position to infinity.
             
             obj = obj@CarSearchPosition(car, xPos, yPos, Rotation);
-            obj.costToPosition = Inf;            
+            
+            if (nargin < 5)
+                obj.costToPosition = Inf;
+            else
+                obj.costToPosition = cost;
+            end
+            
         end
         
         function boolean = ifCostLower(obj, cost)
@@ -35,6 +41,11 @@ classdef DijkstraPosition < CarSearchPosition
         function cost = getCost(obj)
             % Returns the cost to position from the start position
             cost = obj.costToPosition;
+        end
+        
+        function cost = getTotalCost(obj)
+            % Returns the total cost from the start position
+            cost = obj.getCost();
         end
         
     end

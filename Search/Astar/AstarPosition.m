@@ -9,11 +9,15 @@ classdef AstarPosition < DijkstraPosition
     
     methods
         
-        function obj = AstarPosition(car, xPos, yPos, Rotation, endPoint)
+        function obj = AstarPosition(car, xPos, yPos, Rotation, endPoint, cost)
             % Calls "DijkstraPosition" constructor
             % and sets the cost of the position to infinity.
             
-            obj = obj@DijkstraPosition(car, xPos, yPos, Rotation);
+            if (nargin < 5)
+                cost = Inf;
+            end
+            
+            obj = obj@DijkstraPosition(car, xPos, yPos, Rotation, cost);
             obj.setEndGoal(endPoint);
         end
         
@@ -28,10 +32,16 @@ classdef AstarPosition < DijkstraPosition
             obj.distanceToGoal = norm(endPoint-curPoint);
         end
         
+        function distance = getDistanceToGoal(obj)
+            % Returns the euclidean distance from the point to the given
+            % goal point.
+            distance = obj.distanceToGoal;
+        end
+        
         function cost = getTotalCost(obj)
             % Returns the total cost of the current position
             % (Used in the A* Algorithm!)
-            cost = obj.getCost() + obj.distanceToGoal;
+            cost = obj.getCost() + obj.getDistanceToGoal();
         end
         
     end

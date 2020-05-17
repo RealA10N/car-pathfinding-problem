@@ -12,16 +12,26 @@ classdef SearchCar < Car
             outputObj = CarSearchPosition(obj, obj.xPos, obj.yPos, obj.Rotation);
         end
         
-        function outputObj = convertToDijkstraPosition(obj)
+        function outputObj = convertToDijkstraPosition(obj, cost)
             % Returns an "DijkstraPosition" object that contains
             % the current position of the car
-            outputObj = DijkstraPosition(obj, obj.xPos, obj.yPos, obj.Rotation);
+            
+            if (nargin < 2)
+                outputObj = DijkstraPosition(obj, obj.xPos, obj.yPos, obj.Rotation);
+            else
+                outputObj = DijkstraPosition(obj, obj.xPos, obj.yPos, obj.Rotation, cost);
+            end
         end
         
-        function outputObj = convertToAstarPosition(obj, endPoint)
+        function outputObj = convertToAstarPosition(obj, endPoint, cost)
             % Returns an "AstarPosition" object that contains
             % the current position of the car
-            outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint);
+            
+            if (nargin < 3)
+                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint);
+            else
+                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint, cost);
+            end
         end
     
     end

@@ -29,7 +29,7 @@ classdef DijkstraPositionQueue < PositionQueue
                 % if already visited same position -> checks cost and
                 % updates if needed!
                 
-                if(positionObj.getCost() < positionFromQueue.getCost())
+                if(positionObj.getTotalCost() < positionFromQueue.getTotalCost())
                     obj.removeFromQueue(positionFromQueue);
                     obj.literallyAddPosition(positionObj);
                 end
@@ -99,7 +99,7 @@ classdef DijkstraPositionQueue < PositionQueue
             
             obj.queue = [obj.queue positionObj];
             obj.queue_matrix = [obj.queue_matrix; positionObj.getPosition()];
-            obj.costArray = [obj.costArray positionObj.getCost()];
+            obj.costArray = [obj.costArray positionObj.getTotalCost()];
         end
         
     end
