@@ -23,10 +23,9 @@ map.setend([17 10])  % Constant goal value
 
 map.generate()
 
-Visited = zeros(0, 3);
 queue = DijkstraPositionQueue();
 
-starting_pos = car.getCurSearchPosition().toDijkstraPosition();
+starting_pos = car.convertToDijkstraPosition();
 starting_pos.tryUpdateCost(0);
 queue.addPosition(starting_pos);
 
@@ -58,7 +57,7 @@ while(~queue.isEmpty())
         driver.directions.(cur_direction).move()
         
         % Generate car position
-        new_pos = DijkstraPosition(car, car.xPos, car.yPos, car.Rotation);
+        new_pos = car.convertToDijkstraPosition();
         new_pos.setLastPos(curPos)
         
         % Adds the position to the queue. only if the cost of the current

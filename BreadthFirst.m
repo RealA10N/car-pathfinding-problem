@@ -22,7 +22,7 @@ map.generate()  % Show the map with end point
 
 % Create the point queue, add the starting point
 queue = BreadthFirstPositionQueue();
-queue.addPosition(car.getCurSearchPosition());
+queue.addPosition(car.convertToPosition());
 
 % Get all the move directions from car-driver
 all_directions = fieldnames(driver.directions);
@@ -56,7 +56,7 @@ while(~queue.isEmpty())
         driver.directions.(cur_direction).move()
         
         % Generate car position
-        new_pos = car.getCurSearchPosition();
+        new_pos = car.convertToPosition();
         new_pos.setLastPos(curPos)
         
         % Add to queue if never visited
