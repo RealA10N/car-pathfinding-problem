@@ -1,5 +1,5 @@
 addpath General Search
-addpath Search/Astar
+addpath Search/Astar Search/Dijkstras
 
 car = SearchCar(3,3,90);
 driver = CarDriver(car);
