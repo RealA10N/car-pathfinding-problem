@@ -23,14 +23,16 @@ classdef SearchCar < Car
             end
         end
         
-        function outputObj = convertToAstarPosition(obj, endPoint, cost)
+        function outputObj = convertToAstarPosition(obj, endPoint, cost, pullingStrength)
             % Returns an "AstarPosition" object that contains
             % the current position of the car
             
             if (nargin < 3)
                 outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint);
-            else
+            elseif (nargin == 3)
                 outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint, cost);
+            else
+                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint, cost, pullingStrength);
             end
         end
     
