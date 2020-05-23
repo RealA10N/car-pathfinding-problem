@@ -3,19 +3,28 @@ classdef Map < handle
     
     properties (Access = protected)
         car
-        obstacles 
-    end
-    
-    properties (Constant)
-        maxSize = 20
+        obstacles
+        maxSize
     end
     
     methods
         
-        function obj = Map(car, obstacles)
+        function obj = Map(car, obstacles, size)
             % Creates an empty map & puts the car on it.
+            
+            if (nargin < 3)
+                size = 20;
+            end
+            
             obj.car = car;
             obj.obstacles = obstacles;
+            obj.maxSize = size;
+            
+        end
+        
+        function setSize(obj, size)
+            % Changes the size of the map
+            obj.maxSize = size;
         end
         
         function addObstacles(obj, obstacles)
