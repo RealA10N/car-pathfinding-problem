@@ -16,6 +16,10 @@ classdef Map < handle
                 size = 20;
             end
             
+            if (nargin < 2)
+                obstacles = [];
+            end
+            
             obj.car = car;
             obj.obstacles = obstacles;
             obj.maxSize = size;
@@ -40,6 +44,12 @@ classdef Map < handle
         
         function boolean = checkObstacleCarIntersect(obj)
             % Returns true if the car is touching one or more obstacles.
+            
+            if (isempty(obj.obstacles))
+                % if there is no obstacles
+                boolean = false;
+                return
+            end
             
             intersectionsCount = sum(overlaps(obj.get_car_shape(), obj.get_obstacle_shapes()));
             
