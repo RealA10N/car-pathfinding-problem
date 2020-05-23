@@ -5,9 +5,9 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
     end
     
     methods
-        function obj = AstarAlgorithm(map)
+        function obj = AstarAlgorithm(map, stats)
             % Calls superclass constuctor
-            obj = obj@ForwardSearchAlgorithm(map, "A* Search");
+            obj = obj@ForwardSearchAlgorithm(map, stats, "A* Search");
             
             obj.pullingStrength = 1;
         end

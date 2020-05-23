@@ -20,9 +20,9 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
     
     methods
         
-        function obj = ForwardSearchAlgorithm(map, name)
+        function obj = ForwardSearchAlgorithm(map, stats, name)
             % Calls superclass constuctor
-            obj = obj@Algorithm(map, name);
+            obj = obj@Algorithm(map, stats, name);
         end
         
         function run(obj, drawEveryStep)
