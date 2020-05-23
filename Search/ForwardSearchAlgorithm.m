@@ -11,6 +11,11 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
         % A method that takes the current car position and returns a
         % position object. If "lastPos" is given, the method will set the
         % methods last position as the given one.
+        
+        position = carToStartingPosition(obj)
+        % A method that takes the current car position and returns a
+        % position object, in the form of a starting point (with matching
+        % cost, etc.)
     end
     
     methods
@@ -31,7 +36,7 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             
             % Create the queue, based on the current algorithm
             queue = obj.getAlgorithmQueueObj();
-            queue.addPosition(obj.carToPosition());
+            queue.addPosition(obj.carToStartingPosition());
             
             % Save all the possible moving directions of the car
             possible_moves = obj.driver.getDirectionNames();
@@ -68,22 +73,25 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 for move=1:length(possible_moves)
                     % for every move that the car can move to
                     
+                    % Teleport back to the original position
+                    curPos.teleport();
+                    
                     % move to the next direction
-                    curMove = possible_moves(move);
+                    curMove = possible_moves{move};
                     obj.driver.getDirection(curMove).move();
                     
                     % Saves the new position, with a pointer to the last
                     % one
-                    newPos = obj.carToPostion(curPos);
+                    newPos = obj.carToPosition(curPos);
                     
                     % Adds the new position to the queue
                     queue.addPosition(newPos)
                     
-                    % Teleport back to the original position
-                    curPos.teleport();  
-                    
                 end
             end
+            
+            obj.map.show_path(curPos);
+            
         end
     
     end

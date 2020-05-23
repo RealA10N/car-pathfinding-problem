@@ -20,6 +20,15 @@ classdef DijkstrasAlgorithm < ForwardSearchAlgorithm
             end
         
         end
+        
+        function position = carToStartingPosition(obj)
+            % Returns a "DijkstraPosition" object that contains the current
+            % position of the car, with cost 0 and no lastPos.
+            
+            position = obj.carToPosition();
+            position.tryUpdateCost(0)
+        
+        end
     end
     
     methods (Static)

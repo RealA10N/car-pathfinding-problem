@@ -103,6 +103,20 @@ classdef Main
             obj.map.generate()
         end
         
+        function search(obj, algorithmObj)
+            % A function that will search a path to the end position, with
+            % the given algorithm. if an algorithm isn't given, the user
+            % will be displayed with a window that asks him to choose one.
+            
+            if (nargin < 2)
+                % If algorithmObj is not given
+                algorithmObj = obj.userSelectAlgorithm();
+            end
+            
+            algorithmObj.run()
+            
+        end
+        
     end
 
     

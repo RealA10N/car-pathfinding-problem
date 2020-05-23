@@ -16,7 +16,7 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
             % Returns an "AstarPosition" object that contains
             % the current position of the car.
             
-            position = AstarPositon(obj.map.getCar());
+            position = AstarPosition(obj.map.getCar());
             
             % Saves the end point
             position.setEndGoal(obj.map.getend());
@@ -30,6 +30,15 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
                 costToPos = lastPos.getCost() + 1;  % Calculates the cost to current point
                 position.tryUpdateCost(costToPos);  % Saves cost to current point
             end
+        
+        end
+        
+        function position = carToStartingPosition(obj)
+            % Returns a "AstarPosition" object that contains the current
+            % position of the car, with cost 0 and no lastPos.
+            
+            position = obj.carToPosition();
+            position.tryUpdateCost(0)
         
         end
     end

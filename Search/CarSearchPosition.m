@@ -77,8 +77,8 @@ classdef CarSearchPosition < handle
             obj.lastPos = positionObj;
         end
         
-        function boolean = ifLastPostion(obj)
-            % Returns true if there is a "last postion" value.
+        function boolean = ifLastPosition(obj)
+            % Returns true if there is a "last position" value.
             
             boolean = ~isempty(obj.lastPos);
         end
