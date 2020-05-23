@@ -1,7 +1,7 @@
 classdef Map < handle
     % Contains one car and an array of obstacles.
     
-    properties
+    properties (Access = protected)
         car
         obstacles 
     end
@@ -14,9 +14,13 @@ classdef Map < handle
         
         function obj = Map(car, obstacles)
             % Creates an empty map & puts the car on it.
-            
             obj.car = car;
             obj.obstacles = obstacles;
+        end
+        
+        function addObstacles(obj, obstacles)
+            % Adds one or more obstacles to the map.
+            obj.obstacles = [ obj.obstacles obstacles ];
         end
         
         
