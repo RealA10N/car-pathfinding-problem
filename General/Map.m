@@ -70,6 +70,36 @@ classdef Map < handle
             any(any(obj.car.vertices < 0)));
         end
         
+        function boolean = checkPointDead(obj, x, y)
+            % Returns true if the given point is outside of the map or
+            % touches one or more obstacles.
+            boolean = obj.checkObstaclePointIntersect(x, y) ...
+                || obj.checkIfPointOutOfGraph(x, y);
+        end
+        
+        function boolean = checkObstaclePointIntersect(obj, x, y)
+            % Returns true if the given point is inside one of the
+            % obstacles on the map.
+            if (isempty(obj.obstacles))
+                boolean = false;
+            else
+                shapes = obj.get_obstacle_shapes();                
+                for i=1:length(shapes)
+                    if (isinterior(shapes(i), x, y))
+                        boolean = true;
+                        return;
+                    end
+                end
+                boolean = false;
+            end
+        end
+        
+        function boolean = checkIfPointOutOfGraph(obj, x, y)
+            % Returns true if the given point is inside the map.
+            boolean = (x > obj.maxSize) || (y > obj.maxSize);
+            boolean = boolean || (x < 0) || (y < 0);
+        end
+        
         function generate(obj)
             % Shows & Updates the graph!
             
@@ -93,7 +123,7 @@ classdef Map < handle
         function shapes = get_obstacle_shapes(obj)
             % Returns an array of polyshape objects; each polyshape
             % represents an obstacle.
-            
+                        
             shapes = [];
             for i = 1:length(obj.obstacles)
                 shapes = [shapes obj.obstacles(i).get_shape()];
