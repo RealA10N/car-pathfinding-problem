@@ -35,6 +35,11 @@ classdef CarDriver
             
         end
         
+        function names = getDirectionNames(obj)
+            % Returns a list of the direction names of the driver.
+            names = fieldnames(obj.directions);
+        end
+        
         
         
     end

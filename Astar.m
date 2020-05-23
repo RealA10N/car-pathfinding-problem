@@ -24,7 +24,7 @@ starting_pos = car.convertToAstarPosition(endPoint);
 starting_pos.tryUpdateCost(0);
 queue.addPosition(starting_pos);
 
-all_directions = fieldnames(driver.directions);
+all_directions = driver.getDirectionNames();
 
 tic
 while(~queue.isEmpty())

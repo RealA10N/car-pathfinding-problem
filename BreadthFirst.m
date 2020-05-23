@@ -25,7 +25,7 @@ queue = BreadthFirstPositionQueue();
 queue.addPosition(car.convertToPosition());
 
 % Get all the move directions from car-driver
-all_directions = fieldnames(driver.directions);
+all_directions = driver.getDirectionNames();
 
 
 tic
