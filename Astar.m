@@ -22,6 +22,7 @@ queue = AstarPositionQueue();
 
 starting_pos = car.convertToAstarPosition(endPoint);
 starting_pos.tryUpdateCost(0);
+starting_pos.setPullingStrength(1);
 queue.addPosition(starting_pos);
 
 all_directions = driver.getDirectionNames();
@@ -55,6 +56,7 @@ while(~queue.isEmpty())
         new_pos = car.convertToAstarPosition(endPoint);
         new_pos.setLastPos(curPos)
         new_pos.tryUpdateCost(curPos.getCost() + 1)
+        new_pos.setPullingStrength(1);
         
         % Adds the position to the queue. only if the cost of the current
         % position is the lowest!

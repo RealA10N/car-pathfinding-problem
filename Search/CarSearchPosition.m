@@ -20,6 +20,15 @@ classdef CarSearchPosition < handle
     
     methods
         function obj = CarSearchPosition(car, xPos, yPos, Rotation)
+            
+            if (nargin == 1)
+                % If the only parameter is given is the car: save the
+                % location of the car!
+                xPos = car.xPos;
+                yPos = car.yPos;
+                Rotation = car.Rotation;
+            end
+            
             obj.car = car;
             obj.xPos = xPos;
             obj.yPos = yPos;

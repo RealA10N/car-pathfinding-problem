@@ -47,6 +47,10 @@ classdef DijkstraPositionQueue < PositionQueue
             lowest_cost = min(obj.costArray);
             lowest_index = find(obj.costArray == lowest_cost);
             
+            if (length(lowest_index) > 1)
+                lowest_index = lowest_index(1);
+            end
+            
             obj.pulled = [obj.pulled obj.queue(lowest_index)];  % Add item to pulled list
             obj.pulled_matrix = [obj.pulled_matrix; obj.queue_matrix(lowest_index,:)];
             

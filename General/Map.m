@@ -26,6 +26,11 @@ classdef Map < handle
             
         end
         
+        function car = getCar(obj)
+            % Returns the car on the map.
+            car = obj.car;
+        end
+        
         function setSize(obj, size)
             % Changes the size of the map
             obj.maxSize = size;

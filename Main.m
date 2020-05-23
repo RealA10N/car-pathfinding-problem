@@ -7,11 +7,10 @@ classdef Main
         car
         driver
         map
-    end
-    
-    properties (Access = protected, Constant)
-        digits_after_decimal_point = 0;
-        % used for the start and end position, obstacle positions and more.
+        
+        % Defaults
+        digits_after_decimal_point
+        algorithm_list
     end
     
     methods
@@ -27,6 +26,17 @@ classdef Main
             obj.car = SearchCar(5, 5, 0);  % default car location
             obj.driver = CarDriver(obj.car);
             obj.map = PathMap(obj.car);  % default size, no obstacles
+            
+            % Set default values
+            obj.digits_after_decimal_point = 0;
+            
+            % Generates and returns the algorithm list, that contains all
+            % the "Algorithm" subclasses.
+            obj.algorithm_list = { ...
+                BreadthFirstAlgorithm(obj.map), ...
+                DijkstrasAlgorithm(obj.map), ...
+                AstarAlgorithm(obj.map) ...
+                };
         end
         
         function setStart(obj, rotation, x, y)
@@ -59,7 +69,7 @@ classdef Main
             if (nargin < 3)
                 % If the point is not given
                 obj.generate()  % generate the map before user input
-                [ x, y ] = Main.userInPoints(1);  % user selects the end point on graph
+                [ x, y ] = obj.userInPoints(1);  % user selects the end point on graph
             end
             
             obj.map.setend([x y])
@@ -93,19 +103,50 @@ classdef Main
             obj.map.generate()
         end
         
-        
     end
+
     
-    methods (Access = protected, Static)
+    methods (Access = protected)
         
-        function [ x, y ] = userInPoints(points_num)
+        function [ x, y ] = userInPoints(obj, points_num)
             % This method uses the ginput function to take in input from
             % the user, but the points are rounded.
             [ x, y ] = ginput(points_num);
-            x = round(x, Main.digits_after_decimal_point);
-            y = round(y, Main.digits_after_decimal_point);
+            x = round(x, obj.digits_after_decimal_point);
+            y = round(y, obj.digits_after_decimal_point);
+        end
+        
+        function algorithmObj = userSelectAlgorithm(obj)
+            % Opens a window that lets the user select a search algorithm
+            % from the list. The selected algorithm object is returned!
+            
+            % The text that will be shown above the list
+            prompt = 'Please select the algorithm you want to search with:';
+            
+            % Getting the avalible algorithm names
+            list = obj.getAlgorithmNames();
+            
+            % Asking user for input
+            i = listdlg('ListString', list, 'SelectionMode', 'single', ...
+                'PromptString', prompt, 'ListSize', [300 150]);
+
+            algorithmObj = obj.algorithm_list{i};
+        end
+        
+        function names = getAlgorithmNames(obj)
+            % Generates and returns the algorithm list, that contains all
+            % the "Algorithm" subclasses.
+            
+            names = [];
+            for i=1:length(obj.algorithm_list)
+                curAlgorithm = obj.algorithm_list{i};
+                curName = curAlgorithm.getAlgorithmName();
+                names = [ names curName ];
+            end
+            
         end
         
     end
+
 end
 

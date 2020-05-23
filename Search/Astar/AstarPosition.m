@@ -10,23 +10,20 @@ classdef AstarPosition < DijkstraPosition
     
     methods
         
-        function obj = AstarPosition(car, xPos, yPos, Rotation, endPoint, cost, pullingStrength)
+        function obj = AstarPosition(car, xPos, yPos, Rotation)
             % Calls "DijkstraPosition" constructor
             % and sets the cost of the position to infinity.
             
+            if (nargin == 1)
+                % If the only parameter is given is the car: save the
+                % location of the car!
+                xPos = car.xPos;
+                yPos = car.yPos;
+                Rotation = car.Rotation;
+            end
+            
             obj = obj@DijkstraPosition(car, xPos, yPos, Rotation);
-            
-            if (nargin > 5)
-                obj.tryUpdateCost(cost)
-            end
-            
-            if (nargin > 6)
-                obj.setPullingStrength(pullingStrength)
-            else
-                obj.setPullingStrength(1)
-            end
 
-            obj.setEndGoal(endPoint)
         end
         
         function setEndGoal(obj, endPoint)

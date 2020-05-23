@@ -27,12 +27,15 @@ classdef SearchCar < Car
             % Returns an "AstarPosition" object that contains
             % the current position of the car
             
-            if (nargin < 3)
-                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint);
-            elseif (nargin == 3)
-                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint, cost);
-            else
-                outputObj = AstarPosition(obj, obj.xPos, obj.yPos, obj.Rotation, endPoint, cost, pullingStrength);
+            outputObj = AstarPosition(obj);
+            outputObj.setEndGoal(endPoint);
+            
+            if (nargin >= 3)
+                outputObj.tryUpdateCost(cost);
+            end
+            
+            if (nargin >= 4)
+                outputObj.setPullingStrength(pullingStrength);
             end
         end
     

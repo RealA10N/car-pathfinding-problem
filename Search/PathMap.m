@@ -18,6 +18,11 @@ classdef PathMap < Map
             obj.endPoint = xy;
         end
         
+        function xy = getend(obj)
+            % Returns the end point of the search
+            xy = obj.endPoint;
+        end
+        
         
         function generate(obj)
             % Shows & Updates the graph!

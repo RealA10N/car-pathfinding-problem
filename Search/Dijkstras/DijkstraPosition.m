@@ -9,17 +9,20 @@ classdef DijkstraPosition < CarSearchPosition
     
     methods
         
-        function obj = DijkstraPosition(car, xPos, yPos, Rotation, cost)
+        function obj = DijkstraPosition(car, xPos, yPos, Rotation)
             % Calls "CarSearchPosition" constructor
             % and sets the cost of the position to infinity.
             
-            obj = obj@CarSearchPosition(car, xPos, yPos, Rotation);
-            
-            if (nargin < 5)
-                obj.costToPosition = Inf;
-            else
-                obj.costToPosition = cost;
+            if (nargin == 1)
+                % If the only parameter is given is the car: save the
+                % location of the car!
+                xPos = car.xPos;
+                yPos = car.yPos;
+                Rotation = car.Rotation;
             end
+            
+            obj = obj@CarSearchPosition(car, xPos, yPos, Rotation);
+            obj.costToPosition = Inf;
             
         end
         
