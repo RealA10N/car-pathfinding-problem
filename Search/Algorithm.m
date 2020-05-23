@@ -3,6 +3,7 @@ classdef (Abstract) Algorithm < handle
     
     properties (Access = protected)
         name  % String that holds the algorithm name
+        stats  % Objcets that tracks every search stats and displays them
         map  % A Map object that contains a car and obstacles
         driver  % CarDriver object that contains all the directons the car can move to
     end
@@ -13,8 +14,9 @@ classdef (Abstract) Algorithm < handle
     
     methods
         
-        function obj = Algorithm(map, name)
+        function obj = Algorithm(map, stats, name)
             obj.name = name;
+            obj.stats = stats;
             obj.map = map;
             obj.driver = CarDriver(map.getCar());  % Creates the driver
         end

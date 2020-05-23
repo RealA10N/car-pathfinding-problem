@@ -9,8 +9,13 @@ classdef Main
         map
         
         % Defaults
-        digits_after_decimal_point
-        algorithm_list
+        digits_after_decimal_point  % int. >= 0
+        algorithm_list % Contains "algorithm" objects for
+                       % every algorithm in the program
+        
+        % Search related
+        stats  % Tracks stats of the search algorithm
+
     end
     
     methods
@@ -29,13 +34,14 @@ classdef Main
             
             % Set default values
             obj.digits_after_decimal_point = 0;
+            obj.stats = AlgorithmStats();
             
             % Generates and returns the algorithm list, that contains all
             % the "Algorithm" subclasses.
             obj.algorithm_list = { ...
-                BreadthFirstAlgorithm(obj.map), ...
-                DijkstrasAlgorithm(obj.map), ...
-                AstarAlgorithm(obj.map) ...
+                BreadthFirstAlgorithm(obj.map, obj.stats), ...
+                DijkstrasAlgorithm(obj.map, obj.stats), ...
+                AstarAlgorithm(obj.map, obj.stats) ...
                 };
         end
         
@@ -103,18 +109,22 @@ classdef Main
             obj.map.generate()
         end
         
-        function search(obj, algorithmObj)
+        function search(obj, drawEveryStep)
             % A function that will search a path to the end position, with
             % the given algorithm. if an algorithm isn't given, the user
             % will be displayed with a window that asks him to choose one.
             
+            algorithmObj = obj.userSelectAlgorithm();
+            
             if (nargin < 2)
-                % If algorithmObj is not given
-                algorithmObj = obj.userSelectAlgorithm();
+                % If drawEveryStep is not given
+                drawEveryStep = true;
             end
-            
-            algorithmObj.run()
-            
+
+            obj.stats.startRecord(algorithmObj);
+            algorithmObj.run(drawEveryStep) % The search operation
+            obj.stats.stopRecord(drawEveryStep);
+
         end
         
     end

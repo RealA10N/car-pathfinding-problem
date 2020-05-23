@@ -1,9 +1,9 @@
 classdef DijkstrasAlgorithm < ForwardSearchAlgorithm
     
     methods
-        function obj = DijkstrasAlgorithm(map)
+        function obj = DijkstrasAlgorithm(map, stats)
             % Calls superclass constuctor
-            obj = obj@ForwardSearchAlgorithm(map, "Dijkstra's Search");            
+            obj = obj@ForwardSearchAlgorithm(map, stats, "Dijkstra's Search");            
         end
         
         function position = carToPosition(obj, lastPos)
