@@ -47,11 +47,14 @@ classdef PathMap < Map
             obj.plot_start()
             obj.plot_end()
             
-            while(position.ifLastPostion())
+            while(position.ifLastPosition())
                 position = position.lastPos;
-                position.teleport();
                 plot(obj.car.get_shape(), 'FaceColor', '#f8ea79', 'FaceAlpha', 0.1);
+                position.teleport();
             end
+            
+            % Starting position
+            plot(obj.car.get_shape(), 'FaceColor', '#74f931', 'FaceAlpha', 0.5);
             
             hold off
             obj.fig_config();
