@@ -10,6 +10,7 @@ classdef AlgorithmStats < handle
         timer  % Used with the tic toc command
         drawingEveryStep  % boolean: true if the algorithm draws itself every step.
         queueObj  % A queue object that contains all of the points in the search (pointer)
+        steps  % the number of steps in the final path
     end
     
     methods (Access = private)
@@ -21,6 +22,7 @@ classdef AlgorithmStats < handle
             disp(" - Every step drawing: " + obj.drawingEveryStep)
             disp(" - Time: " + obj.timer)
             disp(" - Fully explored positions: " + obj.queueObj.getPulledCount())
+            disp(" - Final path steps: " + obj.steps)
         end
     end
     
@@ -58,6 +60,22 @@ classdef AlgorithmStats < handle
             % in it or not.
             obj.drawingEveryStep = boolean;
         end
+        
+        function setEndPosition(obj, position)
+            % Updates the path's equlidean and regular step lengths.
+            
+            obj.steps = 0;
+            % euclidean_path = 0;
+            
+            while(position.ifLastPosition())
+                position = position.lastPos;
+                position.teleport;
+                
+                obj.steps = obj.steps + 1;
+            end
+                        
+        end
+        
         
     end
 

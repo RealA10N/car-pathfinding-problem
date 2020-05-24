@@ -97,10 +97,11 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             end
             
             % Stops recording stats and prints them
-            statsObj.stopRecord();
+            statsObj.setEndPosition(curPos)
+            statsObj.stopRecord()
             
             % Shows the found path
-            obj.map.show_path(curPos);
+            obj.map.show_path(curPos)
             
         end
     
