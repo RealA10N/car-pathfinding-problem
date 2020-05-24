@@ -41,7 +41,9 @@ classdef PathMap < Map
         function show_path(obj, position)
             % Shows the postions from the start postion to the given one.
             
-            obj.plot_car()
+            position.teleport()
+            plot(obj.car.get_shape(), 'FaceColor', '#7994fb', 'FaceAlpha', 0.5);
+            
             hold on
             obj.plot_obstacles()
             obj.plot_start()
