@@ -9,7 +9,9 @@ classdef (Abstract) Algorithm < handle
     end
     
     methods (Abstract)
-        run(obj, drawEveryStep)  % A function that runs the search algorithm
+        stats = run(obj, drawEveryStep)  % A function that runs the search algorithm
+                                         % Returns a "AlgorithmStats" object
+                                         % with the search statistics.
     end
     
     methods
@@ -25,7 +27,7 @@ classdef (Abstract) Algorithm < handle
             % Returns a string that contains the name of the algorithm
             name = obj.name;
         end
-
+        
     end
 end
 

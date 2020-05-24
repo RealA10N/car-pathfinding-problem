@@ -4,8 +4,24 @@ classdef AlgorithmStats < handle
     
     properties (Access = protected)
         algorithm  % Saves the running algorithm
-        timer  % Used with the tic toc command
         is_running = false;  % boolean: true if the method "search" is running
+        
+        
+        timer  % Used with the tic toc command
+        drawingEveryStep  % boolean: true if the algorithm draws itself every step.
+        queueObj  % A queue object that contains all of the points in the search (pointer)
+    end
+    
+    methods (Access = private)
+        
+        function printAlgorithmStats(obj)
+            % Prints the statistics of the given statsObj.
+            
+            disp(obj.algorithm.getAlgorithmName() + " complete!")
+            disp(" - Every step drawing: " + obj.drawingEveryStep)
+            disp(" - Time: " + obj.timer)
+            disp(" - Fully explored positions: " + obj.queueObj.getPulledCount())
+        end
     end
     
     methods
@@ -18,7 +34,7 @@ classdef AlgorithmStats < handle
             obj.timer = tic();
         end
             
-        function stopRecord(obj, drawEveryStep)
+        function stopRecord(obj)
             % Called when the search is over. indecates that
             % the search was stopped was completed successfully.
             
@@ -26,13 +42,21 @@ classdef AlgorithmStats < handle
                 obj.timer = toc(obj.timer);
                 obj.is_running = false;
 
-                % Prints the stats of a successful search.
-                disp(obj.algorithm.getAlgorithmName() + " complete!")
-                disp(" - Every Step Drawing: " + drawEveryStep)
-                disp(" - Time: " + obj.timer)
-                
+                % Prints the stats of a successful search
+                obj.printAlgorithmStats()
             end
             
+        end
+        
+        function setQueue(obj, queueObj)
+            % Sets the queue of the search, and saves a pointer to it.
+            obj.queueObj = queueObj;
+        end
+        
+        function setDrawEveryStep(obj, boolean)
+            % Saves a boolean that indecats if the search draws every step
+            % in it or not.
+            obj.drawingEveryStep = boolean;
         end
         
     end

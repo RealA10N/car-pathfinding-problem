@@ -121,9 +121,7 @@ classdef Main
                 drawEveryStep = true;
             end
 
-            obj.stats.startRecord(algorithmObj);
-            algorithmObj.run(drawEveryStep) % The search operation
-            obj.stats.stopRecord(drawEveryStep);
+            algorithmObj.run(drawEveryStep); % The search operation
 
         end
         

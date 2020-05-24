@@ -34,8 +34,14 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 drawEveryStep = true;
             end
             
+            % Start recording stats
+            statsObj = AlgorithmStats();
+            statsObj.setDrawEveryStep(drawEveryStep)
+            statsObj.startRecord(obj)
+            
             % Create the queue, based on the current algorithm
             queue = obj.getAlgorithmQueueObj();
+            statsObj.setQueue(queue);
             queue.addPosition(obj.carToStartingPosition());
             
             % Save all the possible moving directions of the car
@@ -90,6 +96,10 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 end
             end
             
+            % Stops recording stats and prints them
+            statsObj.stopRecord();
+            
+            % Shows the found path
             obj.map.show_path(curPos);
             
         end
