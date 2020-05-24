@@ -96,7 +96,15 @@ classdef Main
                 % If the points are not passed as parameters,
                 % use ginput to selet on the graph.
                 obj.generate()  % generate the map before user input
+                disp("Please select two points on the map to create a rectange obstacle.")
                 [ x, y ] = obj.userInPoints(2);
+            end
+            
+            if (x(1) == x(2) && y(1) == y(2))
+                % If duplicate point, sets the size of the obstacle to 1.
+                % In implementation, obstacle can't be a point!
+                x(2) = x(2) + 1;
+                y(2) = y(2) + 1;
             end
             
             obstacle = RectangleObstacle(x(1), y(1), x(2), y(2));

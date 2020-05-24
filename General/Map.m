@@ -167,6 +167,8 @@ classdef Map < handle
         function fig_config(obj)
             % commands that will set up and draw the figure
             
+            title("Car search map")
+            
             axis equal
             xlim([0 obj.maxSize])
             ylim([0 obj.maxSize])
