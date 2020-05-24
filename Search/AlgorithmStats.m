@@ -8,9 +8,10 @@ classdef AlgorithmStats < handle
         
         
         timer  % Used with the tic toc command
-        drawingEveryStep  % boolean: true if the algorithm draws itself every step.
+        drawingEveryStep  % boolean: true if the algorithm draws itself every step
         queueObj  % A queue object that contains all of the points in the search (pointer)
         steps  % the number of steps in the final path
+        euclidean_distance  % the distance of the found path in euclidean form
     end
     
     methods (Access = private)
@@ -20,10 +21,37 @@ classdef AlgorithmStats < handle
             
             disp(obj.algorithm.getAlgorithmName() + " complete!")
             disp(" - Every step drawing: " + obj.drawingEveryStep)
-            disp(" - Time: " + obj.timer)
+            disp(" - Time: " + AlgorithmStats.timeToString(obj.timer))
             disp(" - Fully explored positions: " + obj.queueObj.getPulledCount())
             disp(" - Final path steps: " + obj.steps)
+            disp(" - Final path euclidean distance: " + obj.euclidean_distance)
         end
+        
+    end
+    
+    methods (Access = private, Static)
+    
+        function str = timeToString(timeInSeconds)
+            % Gets a time in seconds, and returns a string that represents
+            % the given time. for exmaple: "33 seconds" or "1 minute and 33 seconds"
+            
+            % generate seconds only time
+            str = mod(round(timeInSeconds), 60) + " seconds";
+            
+            % generate minutes only time
+            if (timeInSeconds >= 60)
+                minutes = floor(round(timeInSeconds)/60);
+                str = mod(minutes, 60) + " minutes and " + str;
+            end
+            
+            % generate hours only time
+            if (timeInSeconds >= 60*60)
+                hours = floor(round(timeInSeconds)/(60*60));
+                str = hours + " hours, " + str;
+            end
+            
+        end
+        
     end
     
     methods
@@ -65,17 +93,31 @@ classdef AlgorithmStats < handle
             % Updates the path's equlidean and regular step lengths.
             
             obj.steps = 0;
-            % euclidean_path = 0;
+            obj.euclidean_distance = 0;
             
+            position_before = position;
             while(position.ifLastPosition())
-                position = position.lastPos;
-                position.teleport;
                 
+                % Go back one position
+                position = position.lastPos;  
+                
+                % Calculate the euclidean distance between current and
+                % last point
+                curxy = position.getPosition();
+                lastxy = position_before.getPosition();
+                curxy = curxy(1:2);   % Remove the rotation from the position
+                lastxy = lastxy(1:2);
+                curdistance = norm(curxy - lastxy);
+                obj.euclidean_distance = obj.euclidean_distance + curdistance;
+                
+                % Update counters
                 obj.steps = obj.steps + 1;
+                
+                % Set the last position to the current one
+                position_before = position;
             end
                         
         end
-        
         
     end
 
