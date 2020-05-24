@@ -89,6 +89,50 @@ classdef (Abstract) PositionQueue < handle
             count = length(obj.queue);
         end
             
+        
+        function show(obj)
+            % Uses the "scatter3" function to show every visited, queued
+            % and explored position in the search.
+            
+            clf
+            marker_size = 100;
+         
+            x = []; y = []; rotation = []; color = [];
+            
+            % Add the queued points
+            matsize = size(obj.queue_matrix());
+            if (matsize(1) > 0)
+                x = obj.queue_matrix(:,1)';
+                y = obj.queue_matrix(:,2)';
+                rotation = obj.queue_matrix(:,3)';
+                color = [1 0.7 0.67];
+                
+                hold on
+                scatter3(x, y, rotation, marker_size, color, 'filled')
+                hold off
+                
+            end
+            
+            % Add the visited pointes
+            matsize = size(obj.pulled_matrix());
+            if (matsize(1) > 0)
+                x = obj.pulled_matrix(:,1)';
+                y = obj.pulled_matrix(:,2)';
+                rotation = obj.pulled_matrix(:,3)';
+                color = [0.125 0.65 0.65];
+                
+                hold on
+                scatter3(x, y, rotation, marker_size, color, 'filled')
+                hold off
+            end
+            
+            % Show the graph
+            % scatter3(x, y, rotation, 100, color, 'filled');
+            legend(["Visited", "In queue"],'Location','Best');
+
+            
+        end
+        
     end
     
     methods (Static)
