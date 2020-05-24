@@ -3,7 +3,7 @@ classdef (Abstract) PositionQueue < handle
     % Knows how to compare them, sort them,
     % and pull in and out positions.
     
-    properties %(Access = protected)
+    properties (Access = protected)
         queue   % The queue
         queue_matrix
         pulled  % Position that were queued and pulled out
@@ -79,6 +79,16 @@ classdef (Abstract) PositionQueue < handle
             end
         end
         
+        function count = getPulledCount(obj)
+            % Returns the number of the positions that are fully explored.
+            count = length(obj.pulled);
+        end
+        
+        function count = getQueuedCount(obj)
+            % Returns the number of the position currently in the queue.
+            count = length(obj.queue);
+        end
+            
     end
     
     methods (Static)
