@@ -100,10 +100,12 @@ classdef Main
                 [ x, y ] = obj.userInPoints(2);
             end
             
-            if (x(1) == x(2) && y(1) == y(2))
-                % If duplicate point, sets the size of the obstacle to 1.
-                % In implementation, obstacle can't be a point!
+            % If duplicate point, sets the size of the obstacle to 1.
+            % In implementation, obstacle can't be a point!
+            if (x(1) == x(2))
                 x(2) = x(2) + 1;
+            end
+            if (y(1) == y(2))
                 y(2) = y(2) + 1;
             end
             
