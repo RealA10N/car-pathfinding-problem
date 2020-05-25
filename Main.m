@@ -1,4 +1,4 @@
-classdef Main
+classdef Main < handle
     % This class is the main class of the program.
     % You can use this class in a seperate script, or just run it in the
     % command window!
@@ -9,6 +9,7 @@ classdef Main
         map
         
         % Defaults
+        user_drive  % boolean: true if the user is controlling the car
         digits_after_decimal_point  % int. >= 0
         algorithm_list % Contains "algorithm" objects for
                        % every algorithm in the program
@@ -35,6 +36,7 @@ classdef Main
             % Set default values
             obj.digits_after_decimal_point = 0;
             obj.stats = AlgorithmStats();
+            obj.user_drive = false;
             
             % Generates and returns the algorithm list, that contains all
             % the "Algorithm" subclasses.
@@ -43,6 +45,9 @@ classdef Main
                 DijkstrasAlgorithm(obj.map, obj.stats), ...
                 AstarAlgorithm(obj.map, obj.stats) ...
                 };
+            
+            % Generate the map
+            obj.generate()
         end
         
         function setStart(obj, rotation, x, y)
@@ -135,10 +140,42 @@ classdef Main
 
         end
         
+        function drive(obj)
+            % Toggles the drive mode. drive mode allows the player to
+            % contol the car with the keyboard!
+                        
+            if(obj.user_drive)
+                obj.exitDrive()
+            else
+                obj.startDrive()
+            end
+        end
+        
+        function startDrive(obj)
+            % sets the driving mode to true: the player can contol the car
+            % with the keyboard!
+                        
+            set(gcf,'KeyPressFcn',@(source, event)keyPressDrive(obj, source, event));
+            obj.user_drive = true;
+            
+            disp("You are now contoring the car.")
+            disp("Use the keyboard arrows to drive!")
+        end
+        
+        function exitDrive(obj)
+            % sets the driving mode to false: the player can't control the
+            % car with the keyboard!
+            
+            set(gcf,'KeyPressFcn', '');
+            obj.user_drive = false;
+            
+            disp("You are not contoring the car anymore.")
+        end
+        
     end
 
     
-    methods (Access = protected)
+    methods (Access = private)
         
         function [ x, y ] = userInPoints(obj, points_num)
             % This method uses the ginput function to take in input from
@@ -177,8 +214,16 @@ classdef Main
             end
             
         end
-        
+            
+        function keyPressDrive(obj, ~, event)
+            % This function is called automaticly when the player is
+            % controling the car using the keyboard and presses one of the
+            % keyboard buttons.
+            
+            obj.driver.move(event.Key);
+            obj.generate();
+        end
+    
     end
 
 end
-
