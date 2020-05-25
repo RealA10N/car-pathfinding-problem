@@ -65,6 +65,7 @@ classdef Main < handle
             end
             
             obj.car.teleport(x, y, rotation)
+            obj.map.setstart(x, y, rotation)
             obj.generate()  % show the map with the new location of the car
             
             % Checking if the car status is good (if not in obstacle or out of map)

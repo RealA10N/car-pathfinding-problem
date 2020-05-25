@@ -2,15 +2,15 @@ classdef PathMap < Map
     % A map with start and end points.
     
     properties (Access = private)
-        startPoint;
+        startPosition;
         endPoint;
     end
     
     methods
         
-        function setstart(obj, xy)
+        function setstart(obj, x, y, rotation)
             % Sets the starting point of the search
-            obj.startPoint = xy;
+            obj.startPosition = [x y rotation];
         end
         
         function setend(obj, xy)
@@ -30,7 +30,6 @@ classdef PathMap < Map
             obj.plot_car()
             hold on
             obj.plot_obstacles()
-            obj.plot_start()
             obj.plot_end()
             
             hold off
@@ -46,7 +45,6 @@ classdef PathMap < Map
             
             hold on
             obj.plot_obstacles()
-            obj.plot_start()
             obj.plot_end()
             
             while(position.ifLastPosition())
@@ -74,18 +72,16 @@ classdef PathMap < Map
             end
         end
         
+        function teleportToStart(obj)
+            % Teleports the car to the given start position
+            if (~isempty(obj.startPosition))
+                obj.car.teleport(obj.startPosition(1), obj.startPosition(2), obj.startPosition(3))
+            end
+        end
+        
     end
     
     methods (Access = private)
-        
-        function plot_start(obj)
-            % Puts the start point (if given) on the graph.
-            if(~isempty(obj.startPoint))
-                point = plot(obj.startPoint(1), obj.startPoint(2), 'square black');
-                point.MarkerFaceColor = 'blue';
-                point.MarkerSize = 10;
-            end
-        end
         
         function plot_end(obj)
             % Puts the end point (if given) on the graph.

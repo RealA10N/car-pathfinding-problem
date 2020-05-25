@@ -97,19 +97,19 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 end
             end
             
-            % Stops recording stats and prints them
-            
             path_found = ~queue.isEmpty();
             
             if (path_found)
                 % Shows the found path
                 statsObj.setEndPosition(curPos)
                 obj.map.show_path(curPos)
+                obj.map.teleportToStart()
             else
+                obj.map.teleportToStart()
                 obj.map.generate()
             end
             
-            % Print search results
+            % Stops recording stats and prints them
             statsObj.stopRecord(path_found)
             
         end
