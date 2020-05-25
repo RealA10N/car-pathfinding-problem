@@ -50,11 +50,14 @@ classdef DijkstraPositionQueue < PositionQueue
             if (length(lowest_index) > 1)
                 lowest_index = lowest_index(1);
             end
-            
-            obj.pulled = [obj.pulled obj.queue(lowest_index)];  % Add item to pulled list
-            obj.pulled_matrix = [obj.pulled_matrix; obj.queue_matrix(lowest_index,:)];
-            
+
             nextPos = obj.queue(lowest_index);
+
+            objectFromPulled = obj.getPositionInPulled(nextPos);
+            if (isempty(objectFromPulled))  % if the point doesn't apper in the pulled list
+                obj.pulled = [obj.pulled obj.queue(lowest_index)];  % Add item to pulled list
+                obj.pulled_matrix = [obj.pulled_matrix; obj.queue_matrix(lowest_index,:)];
+            end
             
             obj.queue(lowest_index) = []; % Remove item from queue list
             obj.queue_matrix(lowest_index,:) = [];

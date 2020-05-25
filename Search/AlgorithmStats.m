@@ -16,15 +16,21 @@ classdef AlgorithmStats < handle
     
     methods (Access = private)
         
-        function printAlgorithmStats(obj)
+        function printAlgorithmStats(obj, path_found)
             % Prints the statistics of the given statsObj.
             
-            disp(obj.algorithm.getAlgorithmName() + " complete!")
+            if (path_found)
+                disp(obj.algorithm.getAlgorithmName() + " complete!")
+                disp(" - Final path steps: " + obj.steps)
+                disp(" - Final path euclidean distance: " + obj.euclidean_distance)
+            else
+                disp(obj.algorithm.getAlgorithmName() + " didn't find a path.")
+            end
+            
             disp(" - Every step drawing: " + obj.drawingEveryStep)
             disp(" - Time: " + AlgorithmStats.timeToString(obj.timer))
             disp(" - Fully explored positions: " + obj.queueObj.getPulledCount())
-            disp(" - Final path steps: " + obj.steps)
-            disp(" - Final path euclidean distance: " + obj.euclidean_distance)
+            
         end
         
     end
@@ -64,16 +70,20 @@ classdef AlgorithmStats < handle
             obj.timer = tic();
         end
             
-        function stopRecord(obj)
+        function stopRecord(obj, path_found)
             % Called when the search is over. indecates that
             % the search was stopped was completed successfully.
+            
+            if (nargin < 2)
+                path_found = true;  % assumes that found a path
+            end
             
             if (obj.is_running)
                 obj.timer = toc(obj.timer);
                 obj.is_running = false;
 
                 % Prints the stats of a successful search
-                obj.printAlgorithmStats()
+                obj.printAlgorithmStats(path_found)
             end
             
         end

@@ -32,7 +32,7 @@ classdef CarSearchPosition < handle
             obj.car = car;
             obj.xPos = xPos;
             obj.yPos = yPos;
-            obj.Rotation = Rotation;
+            obj.Rotation = mod(Rotation, 360);
             
             % By default:
             obj.lastPos = [];

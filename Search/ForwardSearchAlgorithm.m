@@ -25,10 +25,11 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             obj = obj@Algorithm(map, stats, name);
         end
         
-        function run(obj, drawEveryStep)
+        function path_found = run(obj, drawEveryStep)
             % drawEveryStep is a boolean. if contains true, each step in
             % the search will be plotted to the figure. otherwise, you will
-            % just see the final path.
+            % just see the final path. Returns true if the algorithm found
+            % a path, and if not returns false.
             
             if (nargin < 2)
                 drawEveryStep = true;
@@ -97,11 +98,19 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             end
             
             % Stops recording stats and prints them
-            statsObj.setEndPosition(curPos)
-            statsObj.stopRecord()
             
-            % Shows the found path
-            obj.map.show_path(curPos)
+            path_found = ~queue.isEmpty();
+            
+            if (path_found)
+                % Shows the found path
+                statsObj.setEndPosition(curPos)
+                obj.map.show_path(curPos)
+            else
+                obj.map.generate()
+            end
+            
+            % Print search results
+            statsObj.stopRecord(path_found)
             
         end
     

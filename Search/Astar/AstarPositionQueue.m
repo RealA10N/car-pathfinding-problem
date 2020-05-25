@@ -12,18 +12,25 @@ classdef AstarPositionQueue < DijkstraPositionQueue
             
             positionFromQueue = obj.getPositionInQueue(positionObj);
             
-            if(~isempty(positionFromQueue))
+            if (obj.checkInQueue(positionObj))
+                
                 % if already visited same position -> checks cost and
                 % updates if needed!
-                
                 if(positionObj.getCost() < positionFromQueue.getCost())
                     obj.removeFromQueue(positionFromQueue);
                     obj.literallyAddPosition(positionObj);
                 end
-                
             else
-                obj.literallyAddPosition(positionObj);
+                
+                if (~obj.checkIfPulled(positionObj))
+                    % If this position is encountered on the first time
+                    obj.literallyAddPosition(positionObj);
+                end
+                % If checkIfPulled returns true, that means that the
+                % position was fully explored already.
+                
             end
+            
         end
                 
         function removeFromQueue(obj, positionObj)
