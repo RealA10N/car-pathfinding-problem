@@ -74,29 +74,7 @@ classdef DijkstraPositionQueue < PositionQueue
         end
         
     end
-    
-    methods (Access = protected)
-                
-        function position = getPositionInQueue(obj, positionObj)
-            % Returns the saved position in the queue, that has the same
-            % xyz as the given position. if not in queue, returns [].
-            
-            if (obj.isEmpty())
-                position = [];
-                return
-            end
-            
-            [ifmember, index] = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
-            
-            if(ifmember)
-                position = obj.queue(index);
-            else
-                position = [];
-            end
-        end
-    
-    end
-    
+        
     methods (Access = private)
         
         function literallyAddPosition(obj, positionObj)

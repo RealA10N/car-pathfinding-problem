@@ -88,6 +88,44 @@ classdef (Abstract) PositionQueue < handle
             % Returns the number of the position currently in the queue.
             count = length(obj.queue);
         end
+        
+        function position = getPositionInQueue(obj, positionObj)
+            % Returns the saved position in the queue, that has the same
+            % xyz as the given position. if not in queue, returns [].
+            
+            if (obj.isEmpty())
+                position = [];
+                return
+            end
+            
+            [ifmember, index] = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
+            
+            if(ifmember)
+                position = obj.queue(index);
+            else
+                position = [];
+            end
+        end
+        
+        function position = getPositionInPulled(obj, positionObj)
+            % Returns the saved position in the pulled list, that has the
+            % same xyz as the given position. if the given position doesn't
+            % appear in the pulled list, will return [].
+            
+            if (obj.isPulledEmpty())
+                position = [];
+                return
+            end
+            
+            [ifmember, index] = ismember(positionObj.getPosition(), obj.pulled_matrix, 'rows');
+            
+            if(ifmember)
+                position = obj.pulled(index);
+            else
+                position = [];
+            end
+            
+        end
             
     end
     
