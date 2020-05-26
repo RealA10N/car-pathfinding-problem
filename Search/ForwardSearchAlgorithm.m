@@ -43,7 +43,12 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             % Create the queue, based on the current algorithm
             queue = obj.getAlgorithmQueueObj();
             statsObj.setQueue(queue);
-            queue.addPosition(obj.carToStartingPosition());
+            
+            % Generate start position and add to queue
+            startPosition = obj.carToStartingPosition();
+            startxyz = startPosition.getPosition();
+            obj.map.setstart(startxyz(1), startxyz(2), startxyz(3))
+            queue.addPosition(startPosition);
             
             % Save all the possible moving directions of the car
             possible_moves = obj.driver.getDirectionNames();
