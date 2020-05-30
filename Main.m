@@ -23,10 +23,7 @@ classdef Main < handle
         
         function obj = Main()
             % Importing all of the algorithm classes
-            addpath General Search
-            addpath Search/BreadthFirst
-            addpath Search/Dijkstras
-            addpath Search/Astar
+            addpath('General', genpath('Search'))
             
             % Creates the needed objects
             obj.car = SearchCar(5, 5, 0);  % default car location
