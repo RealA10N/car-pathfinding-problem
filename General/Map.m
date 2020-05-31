@@ -148,7 +148,7 @@ classdef Map < handle
             % Puts the obstacles on the graph.
             shapes = obj.get_obstacle_shapes();
             if (~isempty(shapes))
-                plot(shapes, 'FaceColor', '#b0000f', 'FaceAlpha', 1);
+                plot(shapes, 'FaceColor', '#b0000f', 'FaceAlpha', 1, 'EdgeAlpha', 0);
             end
         end
         
