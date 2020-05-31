@@ -21,14 +21,19 @@ classdef Main < handle
     
     methods
         
-        function obj = Main()
+        function obj = Main(size)
             % Importing all of the algorithm classes
             addpath('General', genpath('Search'))
             
+            % If the size of the map is not given
+            if (nargin < 1)
+                size = 20;
+            end
+            
             % Creates the needed objects
-            obj.car = SearchCar(5, 5, 0);  % default car location
+            obj.car = SearchCar(size/2, size/2, 0);  % default car location
             obj.driver = CarDriver(obj.car);
-            obj.map = PathMap(obj.car);  % default size, no obstacles
+            obj.map = PathMap(obj.car, size);  % default size, no obstacles
             
             % Set default values
             obj.digits_after_decimal_point = 0;

@@ -9,20 +9,16 @@ classdef Map < handle
     
     methods
         
-        function obj = Map(car, obstacles, size)
+        function obj = Map(car, size, obstacles)
             % Creates an empty map & puts the car on it.
             
             if (nargin < 3)
-                size = 20;
-            end
-            
-            if (nargin < 2)
                 obstacles = [];
             end
             
             obj.car = car;
+            obj.maxSize = size;            
             obj.obstacles = obstacles;
-            obj.maxSize = size;
             
         end
         
