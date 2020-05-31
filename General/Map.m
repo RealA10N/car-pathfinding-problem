@@ -32,6 +32,11 @@ classdef Map < handle
             obj.maxSize = size;
         end
         
+        function size = getSize(obj)
+            % Returns the size of the map
+            size = obj.maxSize;
+        end
+        
         function addObstacles(obj, obstacles)
             % Adds one or more obstacles to the map.
             obj.obstacles = [ obj.obstacles obstacles ];
@@ -100,26 +105,24 @@ classdef Map < handle
             boolean = (x > obj.maxSize) || (y > obj.maxSize);
             boolean = boolean || (x < 0) || (y < 0);
         end
-        
+                
         function generate(obj)
             % Shows & Updates the graph!
-            
-            if(obj.checkDead())
-                disp("You are dead!");
-            end
-            
-            obj.plot_car()
-            hold on
-            obj.plot_obstacles()
+            obj.plot_all()
             hold off
-
             obj.fig_config()
-
         end
             
     end
     
     methods (Access = protected)
+        
+        function plot_all(obj)
+            % Plots the car and the obstacles to the graph.
+            obj.plot_car()
+            hold on
+            obj.plot_obstacles()
+        end
         
         function shapes = get_obstacle_shapes(obj)
             % Returns an array of polyshape objects; each polyshape
@@ -162,7 +165,7 @@ classdef Map < handle
         
         function fig_config(obj)
             % commands that will set up and draw the figure
-            
+                        
             title("Car search map")
             
             axis equal

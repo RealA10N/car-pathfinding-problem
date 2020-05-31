@@ -23,20 +23,6 @@ classdef PathMap < Map
             xy = obj.endPoint;
         end
         
-        
-        function generate(obj)
-            % Shows & Updates the graph!
-            
-            obj.plot_car()
-            hold on
-            obj.plot_obstacles()
-            obj.plot_end()
-            
-            hold off
-            obj.fig_config()
-            
-        end
-        
         function show_path(obj, position)
             % Shows the postions from the start postion to the given one.
             
@@ -79,6 +65,16 @@ classdef PathMap < Map
             end
         end
         
+    end
+    
+    methods (Access = protected)
+    
+        function plot_all(obj)
+            % Plots the car, obstacles and end point to the graph.
+            plot_all@Map(obj)
+            obj.plot_end()
+        end
+    
     end
     
     methods (Access = private)
