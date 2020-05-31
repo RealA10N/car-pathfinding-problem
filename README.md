@@ -2,6 +2,12 @@
 
 Use the [Main.m](Main.m) object to create a new pathfinding problem. This class is designed to be used inside of a dedicated script, and/or inside the command window.
 
+### Table of Contents
+
+- [The Map, Constructor method](#The-Map)
+- [The Start State, The Main.setStart() Method](#Start-State)
+- [The End Point, The Main.setEnd() Method](#End-Point)
+
 
 ## The Map
 
