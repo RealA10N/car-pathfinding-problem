@@ -1,8 +1,9 @@
 classdef RandomPoint < handle
-
+    % when created, generates a random point on the map and saves it.
+    
     properties (Access = protected)
         x
-        y
+        y  % Randomly generated in the constructor
     end
     
     
@@ -34,8 +35,8 @@ classdef RandomPoint < handle
         function plot(obj)
             % Shows the point on the graph
             
-            point = plot(obj.x, obj.y, '.');
-            point.MarkerEdgeColor = '#ffa100';
+            point = plot(obj.x, obj.y, '*');
+            point.MarkerEdgeColor = 'black';
             point.MarkerSize = 10;
         end
         
