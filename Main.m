@@ -161,7 +161,7 @@ classdef Main < handle
             set(gcf,'KeyPressFcn',@(source, event)keyPressDrive(obj, source, event));
             obj.user_drive = true;
             
-            disp("You are now contoring the car.")
+            disp("You are now controlling the car.")
             disp("Use the keyboard arrows to drive!")
         end
         
@@ -172,7 +172,7 @@ classdef Main < handle
             set(gcf,'KeyPressFcn', '');
             obj.user_drive = false;
             
-            disp("You are not contoring the car anymore.")
+            disp("You are not controlling the car anymore.")
         end
         
     end
