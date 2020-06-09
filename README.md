@@ -2,6 +2,7 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/RealA10N/Car-Pathfinding-Problem?style=flat-square)
 ![HitCount](http://hits.dwyl.com/RealA10N/Car-Pathfinding-Problem.svg)
+![GitHub license](https://img.shields.io/github/license/RealA10N/Car-Pathfinding-Problem?style=flat-square)
 
 Use the [Main.m](Main.m) object to create a new pathfinding problem. This class is designed to be used inside of a dedicated script, and/or inside the command window.
 
