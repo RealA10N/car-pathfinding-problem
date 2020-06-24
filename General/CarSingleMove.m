@@ -1,4 +1,4 @@
-classdef CarSingleMove
+classdef CarSingleMove < handle
     % defines one step in one direction of the car.
     
     properties (Access = protected)

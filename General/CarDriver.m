@@ -9,8 +9,9 @@ classdef CarDriver
     end
     
     properties (Constant)
-        one_step_rot = 45;
+        one_step_rot = 20;
         one_step_jump = 1;
+        step_division = 5;
     end
     
     methods
@@ -19,10 +20,10 @@ classdef CarDriver
             obj.car = car;
             
             obj.directions = struct();
-            obj.directions.uparrow    = CarSingleMove(obj, 0, obj.one_step_jump);
-            obj.directions.downarrow  = CarSingleMove(obj, 0, -obj.one_step_jump);
-            obj.directions.leftarrow  = CarSingleMove(obj, obj.one_step_rot, obj.one_step_jump);
-            obj.directions.rightarrow = CarSingleMove(obj, -obj.one_step_rot, obj.one_step_jump);
+            obj.directions.uparrow    = CarCurvedSingleMove(obj, 0, obj.one_step_jump, obj.step_division);
+            obj.directions.downarrow  = CarCurvedSingleMove(obj, 0, -obj.one_step_jump, obj.step_division);
+            obj.directions.leftarrow  = CarCurvedSingleMove(obj, obj.one_step_rot, obj.one_step_jump, obj.step_division);
+            obj.directions.rightarrow = CarCurvedSingleMove(obj, -obj.one_step_rot, obj.one_step_jump, obj.step_division);
 
         end
         

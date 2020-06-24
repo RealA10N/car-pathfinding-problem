@@ -2,7 +2,7 @@ classdef Main < handle
     % This class is the main class of the program.
     % You can use this class in a seperate script, or just run it in the
     % command window!
-    
+        
     properties (Access = protected)
         car
         driver
@@ -20,6 +20,7 @@ classdef Main < handle
     end
     
     methods
+        %% Constructor
         
         function obj = Main(size)
             % Importing all of the algorithm classes
@@ -33,7 +34,7 @@ classdef Main < handle
             % Creates the needed objects
             obj.car = SearchCar(size/2, size/2, 0);  % default car location
             obj.driver = CarDriver(obj.car);
-            obj.map = PathMap(obj.car, size);  % default size, no obstacles
+            obj.map = PrmMap(obj.car, size);  % default size, no obstacles
             
             % Set default values
             obj.digits_after_decimal_point = 0;
@@ -51,6 +52,8 @@ classdef Main < handle
             % Generate the map
             obj.generate()
         end
+        
+        %% Start and End
         
         function setStart(obj, rotation, x, y)
             % Sets the starting position of the car
@@ -95,6 +98,8 @@ classdef Main < handle
             
         end
         
+        %% Obstacles
+        
         function addObstacle(obj, x, y)
             % Adds an obstacle to the map. if x or y is not given,
             % the user will be requestd to select two points with the
@@ -122,10 +127,14 @@ classdef Main < handle
             obj.generate()  % generate the map after the obstacle is added
         end
         
+        %% Generate
+        
         function generate(obj)
             % Shows the current state of the map
             obj.map.generate()
         end
+        
+        %% Search
         
         function search(obj, drawEveryStep)
             % A function that will search a path to the end position, with
@@ -142,6 +151,8 @@ classdef Main < handle
             algorithmObj.run(drawEveryStep); % The search operation
 
         end
+        
+        %% User drive
         
         function drive(obj)
             % Toggles the drive mode. drive mode allows the player to
@@ -175,8 +186,31 @@ classdef Main < handle
             disp("You are not controlling the car anymore.")
         end
         
+        %% Nodes, Edges, PRM.
+        
+        function addNodes(obj, amount)
+            % Adds the given amout of random nodes to the map.
+            % If amount is not given, will add only one random node.
+            
+            if (nargin < 2)
+                % If the amount parameter isn't given it will be defaulted
+                % to 1.
+                amount = 1;
+            end
+            
+            obj.map.addRandomNodes(amount)
+            obj.generate()
+        end
+        
+        function clearNodes(obj)
+            % Clears the nodes on the graph.
+            obj.map.clearNodes()
+            obj.generate()
+        end
+        
     end
 
+    %% Private methods
     
     methods (Access = private)
         

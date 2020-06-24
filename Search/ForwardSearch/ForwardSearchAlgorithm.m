@@ -90,12 +90,15 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                     
                     % move to the next direction
                     curMove = possible_moves{move};
-                    obj.driver.getDirection(curMove).move();
+                    [x_steps, y_steps] = obj.driver.getDirection(curMove).move();
                     
                     % Saves the new position, with a pointer to the last
                     % one
                     newPos = obj.carToPosition(curPos);
                     
+                    % Saves all of the curve vertices
+                    newPos.set_small_steps(x_steps, y_steps)
+
                     % Adds the new position to the queue
                     queue.addPosition(newPos)
                     
