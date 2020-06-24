@@ -1,4 +1,4 @@
-classdef DijkstraPosition < CarSearchPosition
+classdef DijkstraPosition < CarCurvedSearchPosition
     % Saves the position of the car and the cost from the start position
     % to this one. Has an edition to be used in Dikstra's search
     % algorithm.
@@ -21,7 +21,7 @@ classdef DijkstraPosition < CarSearchPosition
                 Rotation = car.Rotation;
             end
             
-            obj = obj@CarSearchPosition(car, xPos, yPos, Rotation);
+            obj = obj@CarCurvedSearchPosition(car, xPos, yPos, Rotation);
             obj.costToPosition = Inf;
             
         end

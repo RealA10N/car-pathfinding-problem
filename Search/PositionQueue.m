@@ -10,6 +10,11 @@ classdef (Abstract) PositionQueue < handle
         pulled_matrix
     end
     
+    properties (Constant)
+        same_point_area = 0.5
+        % The 
+    end
+    
     methods (Abstract)
         addPosition(obj, positionObj)
         nextPos = pullOut(obj)
@@ -46,7 +51,16 @@ classdef (Abstract) PositionQueue < handle
                 return
             end
             
-            boolean = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
+            diff_queue = abs(obj.queue_matrix - positionObj.getPosition());
+            
+            for i = 1:obj.getQueuedCount()
+                if (all(diff_queue(i,:) < obj.same_point_area))
+                   boolean = true;
+                   return
+                end
+            end
+            
+            boolean = false;
         end
         
         function boolean = checkIfPulled(obj, positionObj)
@@ -93,18 +107,21 @@ classdef (Abstract) PositionQueue < handle
             % Returns the saved position in the queue, that has the same
             % xyz as the given position. if not in queue, returns [].
             
+            position = [];
+            
             if (obj.isEmpty())
-                position = [];
                 return
             end
             
-            [ifmember, index] = ismember(positionObj.getPosition(), obj.queue_matrix, 'rows');
+            diff_queue = abs(obj.queue_matrix - positionObj.getPosition());
             
-            if(ifmember)
-                position = obj.queue(index);
-            else
-                position = [];
+            for i = 1:obj.getQueuedCount()
+                if (all(diff_queue(i,:) < obj.same_point_area))
+                   position = obj.queue(i);
+                   return
+                end
             end
+            
         end
         
         function position = getPositionInPulled(obj, positionObj)
@@ -112,17 +129,19 @@ classdef (Abstract) PositionQueue < handle
             % same xyz as the given position. if the given position doesn't
             % appear in the pulled list, will return [].
             
+            position = [];
+            
             if (obj.isPulledEmpty())
-                position = [];
                 return
             end
             
-            [ifmember, index] = ismember(positionObj.getPosition(), obj.pulled_matrix, 'rows');
+            diff_pulled = abs(obj.pulled_matrix - positionObj.getPosition());
             
-            if(ifmember)
-                position = obj.pulled(index);
-            else
-                position = [];
+            for i = 1:obj.getPulledCount()
+                if (all(diff_pulled(i,:) < obj.same_point_area))
+                   position = obj.pulled(i);
+                   return
+                end
             end
             
         end

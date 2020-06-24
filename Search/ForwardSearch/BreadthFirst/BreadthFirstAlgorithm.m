@@ -10,7 +10,7 @@ classdef BreadthFirstAlgorithm < ForwardSearchAlgorithm
             % Returns an "CarSearchPosition" object that contains
             % the current position of the car
             
-            position = CarSearchPosition(obj.map.getCar());
+            position = CarCurvedSearchPosition(obj.map.getCar());
             
             if (nargin >= 2)
                 position.setLastPos(lastPos)

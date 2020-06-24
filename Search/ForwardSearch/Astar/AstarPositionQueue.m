@@ -10,12 +10,12 @@ classdef AstarPositionQueue < DijkstraPositionQueue
             % If the position is already visited and has a cost,
             % the cost will be updated to the lowest one.
             
-            positionFromQueue = obj.getPositionInQueue(positionObj);
-            
-            if (obj.checkInQueue(positionObj))
-                
+            if (obj.checkInQueue(positionObj))    
                 % if already visited same position -> checks cost and
                 % updates if needed!
+                
+                positionFromQueue = obj.getPositionInQueue(positionObj);
+
                 if(positionObj.getCost() < positionFromQueue.getCost())
                     obj.removeFromQueue(positionFromQueue);
                     obj.literallyAddPosition(positionObj);
