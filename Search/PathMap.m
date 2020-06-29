@@ -60,11 +60,12 @@ classdef PathMap < Map
             if(isempty(obj.endPoint))
                 boolean = false;
             else
+                                
+                x_dist_from_goal = abs(obj.car.xPos - obj.endPoint(1));
+                y_dist_from_goal = abs(obj.car.yPos - obj.endPoint(2));
                 
-                boolean = true;
-                boolean = boolean && abs(obj.car.xPos - obj.endPoint(1)) <= obj.goal_radius_xy;
-                boolean = boolean && abs(obj.car.yPos - obj.endPoint(2)) <= obj.goal_radius_xy;
-                boolean = boolean && abs(obj.car.Rotation - obj.endPoint(3)) <= obj.goal_radius_rotation;
+                boolean = hypot(x_dist_from_goal, y_dist_from_goal) <= obj.goal_radius_xy;  % Checking location
+                boolean = boolean && abs(obj.car.Rotation - obj.endPoint(3)) <= obj.goal_radius_rotation;  % Checking rotation
                 
             end
         end
