@@ -6,6 +6,11 @@ classdef PathMap < Map
         endPoint;
     end
     
+    properties (Constant)
+        goal_radius_xy = 1;
+        goal_radius_rotation = 10;  % in degrees
+    end
+    
     methods
         
         function setstart(obj, x, y, rotation)
@@ -13,14 +18,14 @@ classdef PathMap < Map
             obj.startPosition = [x y rotation];
         end
         
-        function setend(obj, xy)
+        function setend(obj, xyrotation)
             % Sets the goal point of the search
-            obj.endPoint = xy;
+            obj.endPoint = xyrotation;
         end
         
-        function xy = getend(obj)
+        function xyrotation = getend(obj)
             % Returns the end point of the search
-            xy = obj.endPoint;
+            xyrotation = obj.endPoint;
         end
         
         function show_path(obj, position)
@@ -53,10 +58,14 @@ classdef PathMap < Map
             % Returns true if car is touching the end point
             
             if(isempty(obj.endPoint))
-                boolean = 0;
+                boolean = false;
             else
-                boolean = isinterior(obj.car.get_shape(), ...
-                obj.endPoint(1), obj.endPoint(2));
+                
+                boolean = true;
+                boolean = boolean && abs(obj.car.xPos - obj.endPoint(1)) <= obj.goal_radius_xy;
+                boolean = boolean && abs(obj.car.yPos - obj.endPoint(2)) <= obj.goal_radius_xy;
+                boolean = boolean && abs(obj.car.Rotation - obj.endPoint(3)) <= obj.goal_radius_rotation;
+                
             end
         end
         

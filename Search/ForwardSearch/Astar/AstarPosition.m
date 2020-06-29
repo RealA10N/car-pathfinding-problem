@@ -34,7 +34,7 @@ classdef AstarPosition < DijkstraPosition
             curPoint = obj.getPosition();
             curPoint = curPoint(1:2);
             
-            obj.distanceToGoal = norm(endPoint-curPoint);
+            obj.distanceToGoal = norm(endPoint(1:2)-curPoint);
         end
         
         function distance = getDistanceToGoal(obj)
