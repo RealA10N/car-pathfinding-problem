@@ -8,8 +8,6 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
         function obj = AstarAlgorithm(map, stats)
             % Calls superclass constuctor
             obj = obj@ForwardSearchAlgorithm(map, stats, "A* Search");
-            
-            obj.pullingStrength = 1;
         end
         
         function position = carToPosition(obj, lastPos)
@@ -20,9 +18,6 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
             
             % Saves the end point
             position.setEndGoal(obj.map.getend());
-            
-            % Update pulling strength
-            position.setPullingStrength(obj.pullingStrength)
             
             % If lastPos is given
             if (nargin >= 2)

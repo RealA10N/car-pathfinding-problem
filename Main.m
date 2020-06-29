@@ -79,15 +79,15 @@ classdef Main < handle
             end
         end
         
-        function setEnd(obj, x, y, rotation)
+        function setEnd(obj, rotation, x, y)
             % Defines the point that the car needs to touch for the
             % algotithm to find a path.
             
-            if (nargin < 4)
+            if (nargin < 2)
                 rotation = 0;
             end
             
-            if (nargin < 3)
+            if (nargin < 4)
                 % If the point is not given
                 obj.generate()  % generate the map before user input
                 [ x, y ] = obj.userInPoints(1);  % user selects the end point on graph

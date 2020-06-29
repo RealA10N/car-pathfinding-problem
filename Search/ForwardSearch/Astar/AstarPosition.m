@@ -5,7 +5,16 @@ classdef AstarPosition < DijkstraPosition
     
     properties (SetAccess = protected, GetAccess = public)
         distanceToGoal  % The estimated cost to the goal
-        pullStrength  % Multiplier of the distance cost. default value is 1
+    end
+    
+    properties (Constant)
+        pullStrength = 1;  % Multiplier of the distance cost.
+            % If this value is high, the algorithm will give more weight to
+            % the distance from the position to the end point, and if this
+            % value is low the algorithm will give more weight to the
+            % number of steps.
+        rotationStrength = 0.125;  % How much strength the rotaiton has in the final
+                                   % distance of each position.
     end
     
     methods
@@ -30,11 +39,19 @@ classdef AstarPosition < DijkstraPosition
             % Set the end point and calculates the euclidean distance
             % between the point and the goal.
             
-            % Getting xy of this point
+            % Getting position of the car
             curPoint = obj.getPosition();
-            curPoint = curPoint(1:2);
             
-            obj.distanceToGoal = norm(endPoint(1:2)-curPoint);
+            xy_vector = endPoint(1:2)-curPoint(1:2);
+            rotation = mod(endPoint(3)-curPoint(3), 360);
+            
+            if (rotation > 180)
+                rotation = 180 - mod(rotation, 180);
+            end
+            
+            rotation = rotation * obj.rotationStrength;
+            
+            obj.distanceToGoal = norm([xy_vector rotation]);
         end
         
         function distance = getDistanceToGoal(obj)
@@ -46,24 +63,7 @@ classdef AstarPosition < DijkstraPosition
         function cost = getTotalCost(obj)
             % Returns the total cost of the current position
             % (Used in the A* Algorithm!)
-            cost = obj.getCost() + (obj.getDistanceToGoal() * obj.getPullingStrength());
-        end
-        
-        function strength = getPullingStrength(obj)
-            % Returns the pulling strength of the distance to the goal.
-            % If this value is high, the algorithm will give more weight to
-            % the distance from the position to the end point, and if this
-            % value is low the algorithm will give more weight to the
-            % number of steps. The default value is 1.
-            strength = obj.pullStrength;
-        end
-        
-        function setPullingStrength(obj, weight)
-            % If this value is high, the algorithm will give more weight to
-            % the distance from the position to the end point, and if this
-            % value is low the algorithm will give more weight to the
-            % number of steps. The default value is 1.
-            obj.pullStrength = weight;
+            cost = obj.getCost() + (obj.getDistanceToGoal() * obj.pullStrength());
         end
         
     end
