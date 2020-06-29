@@ -13,7 +13,7 @@ classdef Car < Shape
     properties (Access = protected)
         % Generates the shape of the car by default (Facing right)
         % The middle of the car is (0,0)
-        defaultVertices = [2 1; 1 0; 2 -1; -2 -1; -2 1]
+        defaultVertices = [1.5 1; 2 0.5; 2 -0.5; 1.5 -1; -2 -1; -2 1]
     end
     
     
