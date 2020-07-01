@@ -61,11 +61,22 @@ classdef PathMap < Map
                 boolean = false;
             else
                                 
+                % Checking location
+                
                 x_dist_from_goal = abs(obj.car.xPos - obj.endPoint(1));
                 y_dist_from_goal = abs(obj.car.yPos - obj.endPoint(2));
                 
-                boolean = hypot(x_dist_from_goal, y_dist_from_goal) <= obj.goal_radius_xy;  % Checking location
-                boolean = boolean && abs(obj.car.Rotation - obj.endPoint(3)) <= obj.goal_radius_rotation;  % Checking rotation
+                boolean = hypot(x_dist_from_goal, y_dist_from_goal) <= obj.goal_radius_xy;
+                
+                % Checking rotation
+                
+                rotation = mod(obj.endPoint(3)-obj.car.Rotation, 360);
+
+                if (rotation > 180)
+                    rotation = 180 - mod(rotation, 180);
+                end     
+       
+                boolean = boolean && rotation <= obj.goal_radius_rotation;  % Checking rotation
                 
             end
         end
