@@ -12,7 +12,6 @@ classdef (Abstract) PositionQueue < handle
     
     properties (Constant)
         same_point_area = 0.5
-        % The 
     end
     
     methods (Abstract)

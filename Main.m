@@ -34,7 +34,7 @@ classdef Main < handle
             % Creates the needed objects
             obj.car = SearchCar(size/2, size/2, 0);  % default car location
             obj.driver = CarDriver(obj.car);
-            obj.map = PrmMap(obj.car, size);  % default size, no obstacles
+            obj.map = PathMap(obj.car, size);  % default size, no obstacles
             
             % Set default values
             obj.digits_after_decimal_point = 0;
@@ -46,7 +46,8 @@ classdef Main < handle
             obj.algorithm_list = { ...
                 BreadthFirstAlgorithm(obj.map, obj.stats), ...
                 DijkstrasAlgorithm(obj.map, obj.stats), ...
-                AstarAlgorithm(obj.map, obj.stats) ...
+                AstarAlgorithm(obj.map, obj.stats), ...
+                RRTAlgorithm(obj.map, obj.stats)
                 };
             
             % Generate the map

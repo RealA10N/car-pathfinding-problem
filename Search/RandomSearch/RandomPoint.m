@@ -2,8 +2,11 @@ classdef RandomPoint < handle
     % when created, generates a random point on the map and saves it.
     
     properties (Access = protected)
+        % Randomly generated in the constructor
+        
         x
-        y  % Randomly generated in the constructor
+        y  
+        rotation  % rotation in degrees (0-360)
     end
     
     
@@ -14,32 +17,24 @@ classdef RandomPoint < handle
             
             max_size = mapObj.getSize();
             
-            % Generate random x and y
-            obj.x = randi([0, max_size]);
-            obj.y = randi([0, max_size]);
-            
+            % Generate random x, y and rotation
+            obj.x = rand() * max_size;
+            obj.y = rand() * max_size;
+            obj.rotation = rand() * 360;
         end
     
-        function [x, y] = getPosition(obj)
+        function position = getPosition(obj)
             % Returns the position of the random genereted point.
-            x = obj.x;
-            y = obj.y;
-        end
-        
-        function boolean = isInFreeSpace(obj)
-            % Returns true if the random point is in the free space.
-            % Returns false if the point appears inside the obstacle.
-            boolean = ~mapObj.checkObstaclePointIntersect(obj.x, obj.y);
+            position = [obj.x obj.y obj.rotation];
         end
         
         function plot(obj)
             % Shows the point on the graph
+
+            str = strcat('\leftarrow ', num2str(obj.rotation), '°');
+            text(obj.x, obj.y, str)
             
-            point = plot(obj.x, obj.y, '*');
-            point.MarkerEdgeColor = 'black';
-            point.MarkerSize = 10;
         end
-        
     end
 
 end

@@ -31,6 +31,8 @@ classdef PathMap < Map
         function show_path(obj, position)
             % Shows the postions from the start postion to the given one.
             
+            base_postion = position;
+            
             position.teleport()
             plot(obj.car.get_shape(), 'FaceColor', '#7994fb', 'FaceAlpha', 0.5);
             
@@ -52,6 +54,8 @@ classdef PathMap < Map
             hold off
             obj.fig_config();
             
+            base_postion.teleport()
+            
         end
         
         function boolean = check_if_end(obj)
@@ -63,8 +67,8 @@ classdef PathMap < Map
                                 
                 % Checking location
                 
-                x_dist_from_goal = abs(obj.car.xPos - obj.endPoint(1));
-                y_dist_from_goal = abs(obj.car.yPos - obj.endPoint(2));
+                x_dist_from_goal = abs(obj.getCar().xPos - obj.endPoint(1));
+                y_dist_from_goal = abs(obj.getCar().yPos - obj.endPoint(2));
                 
                 boolean = hypot(x_dist_from_goal, y_dist_from_goal) <= obj.goal_radius_xy;
                 
