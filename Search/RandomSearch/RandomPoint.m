@@ -19,7 +19,7 @@ classdef RandomPoint < handle
             % Generate random x, y and rotation            
             obj.x = RandomPoint.getRandomPointXY(endpoint(1), mapObj);
             obj.y = RandomPoint.getRandomPointXY(endpoint(2), mapObj);
-            obj.rotation = normrnd(endpoint(3), 90);
+            obj.rotation = mod(normrnd(endpoint(3), 90), 360);
         end
     
         function position = getPosition(obj)
@@ -45,14 +45,19 @@ classdef RandomPoint < handle
         end
         
         function size = getRandomPointXY(goal_value, mapObj)
-            % Returns a 'smart' random dimension of the point (x or y).
+            % Returns a 'smart' random dimention of the point (x or y).
             % This size leans towards the goal point.
             
-            size = normrnd(goal_value, mapObj.getSize() / 2);
+            mu = goal_value / mapObj.getSize();
+            v = 10;
             
-            size = max([0 size]);
-            size = min([mapObj.getSize() size]);
+            beta_dist_A = mu * v;
+            beta_dist_B = (1 - mu) * v;
             
+            size = betarnd(beta_dist_A, beta_dist_B);
+            size = size * mapObj.getSize();
+            
+            disp(size);
         end
     end
 
