@@ -9,7 +9,7 @@ classdef CarDriver
     end
     
     properties (Constant)
-        one_step_rot = 20;
+        one_step_rot = 22.5;
         one_step_jump = 1;
         step_division = 5;
     end
@@ -34,6 +34,7 @@ classdef CarDriver
                 obj.directions.(direction).move();
             end
             
+            
         end
         
         function direction = getDirection(obj, name)
@@ -45,9 +46,7 @@ classdef CarDriver
             % Returns a list of the direction names of the driver.
             names = fieldnames(obj.directions);
         end
-        
-        
-        
+ 
     end
 end
 

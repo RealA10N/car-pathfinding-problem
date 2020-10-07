@@ -3,6 +3,10 @@ classdef Car < Shape
     % The car's position depends on 3 properties:
     % x position, y position and rotation.
     
+    properties (Access = private)
+        grid_snap = 0.5
+    end
+    
     properties (SetAccess = protected, GetAccess = public)
         % Properties of the car
         xPos
@@ -99,6 +103,20 @@ classdef Car < Shape
             obj.Rotation = rotation;
             obj.xPos = xPos;
             obj.yPos = yPos;
+        end
+        
+        function snap_to_grid(obj)
+            % Round the car x' and y' values and 'snap' it to the grid.
+            
+            x = obj.xPos / obj.grid_snap;
+            y = obj.yPos / obj.grid_snap;
+            
+            x = round(x);
+            y = round(y);
+            
+            obj.xPos = x * obj.grid_snap;
+            obj.yPos = y * obj.grid_snap;
+            
         end
 
         

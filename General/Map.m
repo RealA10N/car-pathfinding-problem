@@ -71,9 +71,13 @@ classdef Map < handle
         
         function boolean = checkIfOutOfGraph(obj)
             % Returns true if the car touches the borders of the graph.
+            
+            vertices = obj.car.update();
+
             boolean = (...
-            any(any(obj.car.vertices > obj.maxSize)) || ...
-            any(any(obj.car.vertices < 0)));
+            any(any(vertices > obj.maxSize)) || ...
+            any(any(vertices < 0)));
+        
         end
         
         function boolean = checkPointDead(obj, x, y)
@@ -165,8 +169,6 @@ classdef Map < handle
         
         function fig_config(obj)
             % commands that will set up and draw the figure
-                        
-            title("Car search map")
             
             axis equal
             xlim([0 obj.maxSize])

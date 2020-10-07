@@ -26,6 +26,9 @@ classdef CarCurvedSingleMove < CarSingleMove
                 small_steps_x(i) = obj.driver.car.xPos;
                 small_steps_y(i) = obj.driver.car.yPos;
             end
+            
+            obj.driver.car.snap_to_grid()
+            
         end
     end
 end

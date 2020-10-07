@@ -13,8 +13,8 @@ classdef AstarPosition < DijkstraPosition
             % the distance from the position to the end point, and if this
             % value is low the algorithm will give more weight to the
             % number of steps.
-        rotationStrength = 0.125;  % How much strength the rotaiton has in the final
-                                   % distance of each position.
+        rotationStrength = 0.05;  % How much strength the rotaiton has in the final
+                                  % distance of each position.
     end
     
     methods

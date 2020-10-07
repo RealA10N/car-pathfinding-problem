@@ -59,6 +59,24 @@ classdef PathMap < Map
         end
         
         function boolean = check_if_end(obj)
+            % Returns true if the search should for the end position should
+            % end.
+            boolean = obj.check_if_touching_end();
+        end
+        
+        function boolean = check_if_car_in_end(obj)
+            % Returns true if the car is in the end position
+            
+            if(isempty(obj.endPoint))
+                boolean = false;
+            else
+                car = obj.getCar();
+                boolean = all([car.xPos, car.yPos, car.Rotation] == obj.endPoint);
+            end
+            
+        end
+        
+        function boolean = check_if_touching_end(obj)
             % Returns true if car is touching the end point
             
             if(isempty(obj.endPoint))

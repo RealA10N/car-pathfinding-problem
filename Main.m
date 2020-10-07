@@ -24,7 +24,7 @@ classdef Main < handle
         
         function obj = Main(size)
             % Importing all of the algorithm classes
-            addpath('General', genpath('Search'))
+            addpath(genpath('General'), genpath('Search'), genpath('Tools'))
             
             % If the size of the map is not given
             if (nargin < 1)

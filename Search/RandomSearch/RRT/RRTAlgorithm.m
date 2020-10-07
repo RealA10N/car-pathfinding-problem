@@ -21,7 +21,7 @@ classdef RRTAlgorithm < Algorithm
             tree.addPosition(cur_pos)  % Add the starting position to the queue
             
             while (~obj.map.check_if_end())  %  While path not found
-                random_point = RandomPoint(obj.map);  % Generate a random point
+                random_point = SmartRandomPoint(obj.map);  % Generate a random point
                 close_node = tree.getNearPosition(random_point);  % Get the closest tree node
                 close_node.teleport()  % Teleport the car to the closest node in the tree
                 obj.stepTowardsPoint(random_point, close_node)  % Move the car one step towards the random point

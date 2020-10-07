@@ -17,8 +17,8 @@ classdef RandomPoint < handle
             endpoint = mapObj.getend();
             
             % Generate random x, y and rotation            
-            obj.x = RandomPoint.getRandomPointXY(endpoint(1), mapObj);
-            obj.y = RandomPoint.getRandomPointXY(endpoint(2), mapObj);
+            obj.x = obj.getRandomPointXY(endpoint(1), mapObj);
+            obj.y = obj.getRandomPointXY(endpoint(2), mapObj);
             obj.rotation = mod(normrnd(endpoint(3), 90), 360);
         end
     
@@ -36,28 +36,14 @@ classdef RandomPoint < handle
         end
     end
     
-    methods (Static)
-        function boolean = checkValidXY(size, mapObj)
-            % Returns true if the given position (x or y) is inside the
-            % board.
-            
-            boolean = size >= 0 && size <= mapObj.getSize();
-        end
+    methods (Access=protected)
         
-        function size = getRandomPointXY(goal_value, mapObj)
-            % Returns a 'smart' random dimention of the point (x or y).
-            % This size leans towards the goal point.
+        function value = getRandomPointXY(~, ~, mapObj)
+            % Returns a random dimention of the point (x or y).
             
-            mu = goal_value / mapObj.getSize();
-            v = 10;
+            size = mapObj.getSize();
+            value = rand * size;
             
-            beta_dist_A = mu * v;
-            beta_dist_B = (1 - mu) * v;
-            
-            size = betarnd(beta_dist_A, beta_dist_B);
-            size = size * mapObj.getSize();
-            
-            disp(size);
         end
     end
 
