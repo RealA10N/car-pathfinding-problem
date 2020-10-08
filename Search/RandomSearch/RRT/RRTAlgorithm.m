@@ -8,13 +8,8 @@ classdef RRTAlgorithm < Algorithm
             obj = obj@Algorithm(map, stats, "RRT");
         end
         
-        function found_path = run(obj, drawEveryStep)
+        function found_path = run(obj, drawEveryStep, pauseEveryStep)
             % Runs the RRT Algorithm and returns the end position.
-            
-            % Draw every step by deafult
-            if (nargin < 2)
-                drawEveryStep = true;
-            end
             
             tree = RRTNodeTree(obj, obj.map);  % Create a queue
             cur_pos = obj.carToStartingPosition();  % Get the starting position
@@ -39,6 +34,10 @@ classdef RRTAlgorithm < Algorithm
                     
                     elseif (drawEveryStep == 'd')  % debug mode
                         tree.show_debug_fig(random_point)
+                    end
+                    
+                    if pauseEveryStep
+                        pause
                     end
                     
                 end

@@ -141,25 +141,30 @@ classdef Main < handle
         
         %% Search
         
-        function search(obj, drawEveryStep)
+        function search(obj, drawEveryStep, pauseEveryStep)
             % A function that will search a path to the end position, with
             % the given algorithm. if an algorithm isn't given, the user
             % will be displayed with a window that asks him to choose one.
             
             algorithmObj = obj.userSelectAlgorithm();
             
+            if (nargin < 3)
+                % If pauseEveryStep is not given
+                pauseEveryStep = false;
+            end
+            
             if (nargin < 2)
                 % If drawEveryStep is not given
                 drawEveryStep = true;
             end
 
-            algorithmObj.run(drawEveryStep); % The search operation
+            algorithmObj.run(drawEveryStep, pauseEveryStep); % The search operation
 
         end
         
         function debug_search(obj)
             algorithmObj = obj.userSelectAlgorithm();
-            algorithmObj.run('d'); % The search operation, with 'd' representing 'debug'
+            algorithmObj.run('d', true); % The search operation, with 'd' representing 'debug'
         end
         
         %% User drive

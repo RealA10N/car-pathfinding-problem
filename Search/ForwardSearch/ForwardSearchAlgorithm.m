@@ -25,15 +25,11 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             obj = obj@Algorithm(map, stats, name);
         end
         
-        function path_found = run(obj, drawEveryStep)
+        function path_found = run(obj, drawEveryStep, pauseEveryStep)
             % drawEveryStep is a boolean. if contains true, each step in
             % the search will be plotted to the figure. otherwise, you will
             % just see the final path. Returns true if the algorithm found
             % a path, and if not returns false.
-            
-            if (nargin < 2)
-                drawEveryStep = true;
-            end
             
             % Start recording stats
             statsObj = AlgorithmStats();
@@ -75,13 +71,6 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                     break;
                 end
                 
-                if (drawEveryStep == true)
-                    % Draws and plottes the path the car took to drive to
-                    % the current position in the search.
-                    obj.map.show_path(curPos);
-                elseif (drawEveryStep == 'd')  % debug mode
-                    queue.show_debug_fig(obj.map);
-                end
                 
                 % Add the next moves to the queue.
                 for move=1:length(possible_moves)
@@ -104,6 +93,18 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                     % Adds the new position to the queue
                     queue.addPosition(newPos)
                     
+                end
+                
+                if (drawEveryStep == true)
+                    % Draws and plottes the path the car took to drive to
+                    % the current position in the search.
+                    obj.map.show_path(curPos);
+                elseif (drawEveryStep == 'd')  % debug mode
+                    queue.show_debug_fig(obj.map);
+                end
+                
+                if pauseEveryStep
+                    pause
                 end
             end
             
