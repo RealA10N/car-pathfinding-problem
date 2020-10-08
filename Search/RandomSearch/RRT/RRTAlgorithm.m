@@ -16,7 +16,7 @@ classdef RRTAlgorithm < Algorithm
                 drawEveryStep = true;
             end
             
-            tree = RRTNodeTree(obj);  % Create a queue
+            tree = RRTNodeTree(obj, obj.map);  % Create a queue
             cur_pos = obj.carToStartingPosition();  % Get the starting position
             tree.addPosition(cur_pos)  % Add the starting position to the queue
             
@@ -31,11 +31,14 @@ classdef RRTAlgorithm < Algorithm
                 if (~obj.map.checkDead())
                     tree.addPosition(cur_pos)  % Save the new position in the tree!
 
-                    if (drawEveryStep)
+                    if (drawEveryStep == true)
                         hold off
                         obj.map.show_path(cur_pos);
                         hold on
                         random_point.plot();
+                    
+                    elseif (drawEveryStep == 'd')  % debug mode
+                        tree.show_debug_fig(random_point)
                     end
                     
                 end

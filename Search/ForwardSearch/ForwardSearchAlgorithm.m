@@ -75,10 +75,12 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                     break;
                 end
                 
-                if (drawEveryStep)
+                if (drawEveryStep == true)
                     % Draws and plottes the path the car took to drive to
                     % the current position in the search.
                     obj.map.show_path(curPos);
+                elseif (drawEveryStep == 'd')  % debug mode
+                    queue.show_debug_fig(obj.map);
                 end
                 
                 % Add the next moves to the queue.

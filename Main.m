@@ -157,6 +157,11 @@ classdef Main < handle
 
         end
         
+        function debug_search(obj)
+            algorithmObj = obj.userSelectAlgorithm();
+            algorithmObj.run('d'); % The search operation, with 'd' representing 'debug'
+        end
+        
         %% User drive
         
         function drive(obj)

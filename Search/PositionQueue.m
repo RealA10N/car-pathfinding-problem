@@ -144,8 +144,44 @@ classdef (Abstract) PositionQueue < handle
             end
             
         end
+        
+        function show_debug_fig(obj, map)
+            % Show the debug figure: contains all the explored and queued
+            % positions.
+            
+            % Configure colors
+            start_end_color = [0 1 0]; % green
+            start_end_size = 40;
+            explored_color = [0 0 1];  % blue
+            queued_color = [1 0 0];  % red
+            other_size = 20;
+            
+            % Add start and end positions
+            start_pos = obj.pulled_matrix(1, :);
+            end_pos = map.getend();
+            
+            % Combine all
+            X = [start_pos(:, 1); end_pos(:, 1); obj.pulled_matrix(:, 1); obj.queue_matrix(:, 1)];
+            Y = [start_pos(:, 2); end_pos(:, 2); obj.pulled_matrix(:, 2); obj.queue_matrix(:, 2)];
+            Z = [start_pos(:, 3); end_pos(:, 3); obj.pulled_matrix(:, 3); obj.queue_matrix(:, 3)];
+            SIZE = [repmat(start_end_size, 1, 2) ...
+                repmat(other_size, 1, size(obj.pulled_matrix, 1))  ...
+                repmat(other_size, 1, size(obj.queue_matrix, 1))];
+            COLOR = [repmat(start_end_color, 2, 1);  ...
+                repmat(explored_color, size(obj.pulled_matrix, 1), 1);  ...
+                repmat(queued_color, size(obj.queue_matrix, 1), 1)];
+            
+            % plot
+            scatter3(X, Y, Z, SIZE, COLOR)
+            
+            % Configure the figure
+            xlim([0 map.getSize()])
+            ylim([0 map.getSize()])
+            zlim([0 360])
+        end
             
     end
+
     
     methods (Static)
         
