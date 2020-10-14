@@ -1,4 +1,4 @@
-classdef Histogram
+classdef HistogramTool
     % A handy tool that will generate a map and
     % random points on it. The random points can
     % and will be displayed as a Histogram.
@@ -10,7 +10,7 @@ classdef Histogram
     end
     
     methods
-        function obj = Histogram(size)
+        function obj = HistogramTool(size)
             % Create a new map with the given size.
             
             if (nargin < 1)
@@ -42,34 +42,17 @@ classdef Histogram
         
         function throw_random_points(obj, num)
             % throw 'num' random points on the map and show the histogram.
-            
-            rand_points = zeros(num, 3);
-            
-            for count = 1:num
-                cur_point = RandomPoint(obj.map);
-                rand_points(count, :) = cur_point.getPosition();
-            end
-            
-            hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
-            pause
-            histogram(rand_points(:, 3))
-            xlim([0 360])
+            obj.throw_points(num, "Random")
         end
         
-        function throw_smart_points(obj, num)
+        function throw_improved_points(obj, num)
             % throw 'num' random special points on the map and show the histogram.
-            
-            rand_points = zeros(num, 3);
-            
-            for count = 1:num
-                cur_point = ImprovedRandomPoint(obj.map);
-                rand_points(count, :) = cur_point.getPosition();
-            end
-            
-            hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
-            pause
-            histogram(rand_points(:, 3))
-            xlim([0 360])
+            obj.throw_points(num, "Improved")
+        end
+        
+        function throw_balanced_points(obj, num)
+            % throw a mixture of random and special points on the map and show the histogram.
+            obj.throw_points(num, "Balanced")
         end
         
     end
@@ -87,7 +70,41 @@ classdef Histogram
             x = round(x);
             y = round(y);
         end
+ 
+        function point = string_to_point(obj, string)
+            % Convert the given string to a new random point
+            
+            if string == "Random"
+                point = RandomPoint(obj.map);
+            
+            elseif string == "Improved"
+                point = ImprovedRandomPoint(obj.map);
+            
+            elseif string == "Balanced"
+                point = BalancedRandomPoint(obj.map);
+            
+            end
+        end
+        
+        function throw_points(obj, num, point_string)
+            % Throws num amount of points onto the map.
+            % The points are from the given type.
+            
+            rand_points = zeros(num, 3);
+            
+            for count = 1:num
+                cur_point = obj.string_to_point(point_string);
+                rand_points(count, :) = cur_point.getPosition();
+            end
+            
+            hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
+            pause
+            histogram(rand_points(:, 3))
+            xlim([0 360])
+            
+        end
         
     end
+    
 end
 
