@@ -32,7 +32,7 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             % a path, and if not returns false.
             
             % Start recording stats
-            statsObj = AlgorithmStats();
+            statsObj = ForwardSearchAlgorithmStats();
             statsObj.setDrawEveryStep(drawEveryStep)
             statsObj.startRecord(obj)
             

@@ -38,7 +38,7 @@ classdef Main < handle
             
             % Set default values
             obj.digits_after_decimal_point = 0;
-            obj.stats = AlgorithmStats();
+            obj.stats = ForwardSearchAlgorithmStats();
             obj.user_drive = false;
             
             % Generates and returns the algorithm list, that contains all
