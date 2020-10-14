@@ -19,7 +19,7 @@ classdef RandomPoint < handle
             % Generate random x, y and rotation            
             obj.x = obj.getRandomPointXY(endpoint(1), mapObj);
             obj.y = obj.getRandomPointXY(endpoint(2), mapObj);
-            obj.rotation = mod(normrnd(endpoint(3), 90), 360);
+            obj.rotation = obj.getRandomPointRotation(endpoint(3));
         end
     
         function position = getPosition(obj)
@@ -40,10 +40,14 @@ classdef RandomPoint < handle
         
         function value = getRandomPointXY(~, ~, mapObj)
             % Returns a random dimention of the point (x or y).
-            
             size = mapObj.getSize();
             value = rand * size;
             
+        end
+        
+        function value = getRandomPointRotation(~, ~)
+            % Returns a random rotation (number) between 0 and 360
+            value = 360 * rand();
         end
     end
 

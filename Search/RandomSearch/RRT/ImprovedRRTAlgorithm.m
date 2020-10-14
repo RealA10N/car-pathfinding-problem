@@ -1,10 +1,10 @@
-classdef RRTAlgorithm < RRTAbstractAlgorithm
+classdef ImprovedRRTAlgorithm < RRTAbstractAlgorithm
     
     methods
     
-        function obj = RRTAlgorithm(map, stats)
+        function obj = ImprovedRRTAlgorithm(map, stats)
             % Calls superclass constuctor
-            obj = obj@RRTAbstractAlgorithm(map, stats, "RRT");
+            obj = obj@RRTAbstractAlgorithm(map, stats, "Improved RRT");
         end
     
     end
@@ -14,7 +14,7 @@ classdef RRTAlgorithm < RRTAbstractAlgorithm
         
         function random_point = generateRandomPoint(obj)
             % generated and returns a random point object
-            random_point = RandomPoint(obj.map);
+            random_point = ImprovedRandomPoint(obj.map);
         end
         
     end

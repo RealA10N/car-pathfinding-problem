@@ -51,21 +51,25 @@ classdef Histogram
             end
             
             hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
+            pause
+            histogram(rand_points(:, 3))
+            xlim([0 360])
         end
         
         function throw_smart_points(obj, num)
             % throw 'num' random special points on the map and show the histogram.
             
-            
             rand_points = zeros(num, 3);
             
             for count = 1:num
-                cur_point = SmartRandomPoint(obj.map);
+                cur_point = ImprovedRandomPoint(obj.map);
                 rand_points(count, :) = cur_point.getPosition();
             end
             
             hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
-            
+            pause
+            histogram(rand_points(:, 3))
+            xlim([0 360])
         end
         
     end
