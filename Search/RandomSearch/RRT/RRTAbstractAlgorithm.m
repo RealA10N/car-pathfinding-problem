@@ -27,7 +27,7 @@ classdef RRTAbstractAlgorithm < Algorithm
 
                     if (drawEveryStep == true)
                         hold off
-                        obj.map.show_path(cur_pos);
+                        obj.map.show_path(cur_pos, statsObj);
                         hold on
                         random_point.plot();
                     
@@ -44,14 +44,13 @@ classdef RRTAbstractAlgorithm < Algorithm
             
             path_found = obj.map.check_if_end();
             
-            hold off
-            obj.map.show_path(cur_pos);
-            hold on
-            obj.map.teleportToStart()
-            
             % Stops recording stats, saves and prints them!
             statsObj.stop_recording(path_found, tree, cur_pos)
             statsObj.print_stats()
+            
+            obj.map.show_path(cur_pos, statsObj);
+            obj.map.teleportToStart()
+
             
         end
     end

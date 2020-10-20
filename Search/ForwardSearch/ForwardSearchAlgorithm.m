@@ -91,7 +91,7 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 if (drawEveryStep == true)
                     % Draws and plottes the path the car took to drive to
                     % the current position in the search.
-                    obj.map.show_path(curPos);
+                    obj.map.show_path(curPos, statsObj);
                 elseif (drawEveryStep == 'd')  % debug mode
                     queue.show_debug_fig(obj.map);
                 end
@@ -103,19 +103,20 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             
             path_found = ~queue.isEmpty();
             
+            % Stops recording stats, saves and prints them!
+            statsObj.stop_recording(path_found, queue, curPos)
+            statsObj.print_stats()
+                        
             if (path_found)
                 % Shows the found path
-                obj.map.show_path(curPos)
+                obj.map.show_path(curPos, statsObj)
                 obj.map.teleportToStart()
 
             else
                 obj.map.teleportToStart()
                 obj.map.generate()
             end
-            
-            % Stops recording stats, saves and prints them!
-            statsObj.stop_recording(path_found, queue, curPos)
-            statsObj.print_stats()
+
 
         end
     

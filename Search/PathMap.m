@@ -28,7 +28,7 @@ classdef PathMap < Map
             xyrotation = obj.endPoint;
         end
         
-        function show_path(obj, position)
+        function show_path(obj, position, statsObj)
             % Shows the postions from the start postion to the given one.
             
             base_postion = position;
@@ -53,6 +53,19 @@ classdef PathMap < Map
             
             hold off
             obj.fig_config();
+            
+            if (nargin >= 3)
+                % If statsObj is given: generate figure title!
+                name = convertCharsToStrings(statsObj.get_algorithm_name());
+                
+                if (statsObj.get_is_running())
+                    string = name + " - Running";
+                else
+                    string = name + " - Final path";
+                end
+                
+                title(string)
+            end
             
             base_postion.teleport()
             

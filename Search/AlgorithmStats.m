@@ -76,6 +76,16 @@ classdef AlgorithmStats < handle
         
         end
         
+        %% Gets
+        
+        function name = get_algorithm_name(obj)
+            name = obj.algorithm_name;
+        end
+        
+        function boolean = get_is_running(obj)
+            boolean = obj.is_running;
+        end
+        
     end
 end
 
