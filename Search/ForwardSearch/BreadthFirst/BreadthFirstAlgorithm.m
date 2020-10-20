@@ -1,9 +1,9 @@
 classdef BreadthFirstAlgorithm < ForwardSearchAlgorithm
     
     methods
-        function obj = BreadthFirstAlgorithm(map, stats)
+        function obj = BreadthFirstAlgorithm(map)
             % Calls superclass constuctor
-            obj = obj@ForwardSearchAlgorithm(map, stats, "Breadth First Search");            
+            obj = obj@ForwardSearchAlgorithm(map, 'Breadth First Search');            
         end
         
         function position = carToPosition(obj, lastPos)

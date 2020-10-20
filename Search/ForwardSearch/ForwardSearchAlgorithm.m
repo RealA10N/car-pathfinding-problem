@@ -20,25 +20,18 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
     
     methods
         
-        function obj = ForwardSearchAlgorithm(map, stats, name)
-            % Calls superclass constuctor
-            obj = obj@Algorithm(map, stats, name);
-        end
-        
-        function path_found = run(obj, drawEveryStep, pauseEveryStep)
+        function statsObj = run(obj, drawEveryStep, pauseEveryStep)
             % drawEveryStep is a boolean. if contains true, each step in
             % the search will be plotted to the figure. otherwise, you will
             % just see the final path. Returns true if the algorithm found
             % a path, and if not returns false.
             
             % Start recording stats
-            statsObj = ForwardSearchAlgorithmStats();
-            statsObj.setDrawEveryStep(drawEveryStep)
-            statsObj.startRecord(obj)
+            statsObj = ForwardSearchAlgorithmStats(obj);
+            statsObj.start_recording()
             
             % Create the queue, based on the current algorithm
             queue = obj.getAlgorithmQueueObj();
-            statsObj.setQueue(queue);
             
             % Generate start position and add to queue
             startPosition = obj.carToStartingPosition();
@@ -112,17 +105,18 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
             
             if (path_found)
                 % Shows the found path
-                statsObj.setEndPosition(curPos)
                 obj.map.show_path(curPos)
                 obj.map.teleportToStart()
+
             else
                 obj.map.teleportToStart()
                 obj.map.generate()
             end
             
-            % Stops recording stats and prints them
-            statsObj.stopRecord(path_found)
-            
+            % Stops recording stats, saves and prints them!
+            statsObj.stop_recording(path_found, queue, curPos)
+            statsObj.print_stats()
+
         end
     
     end

@@ -2,9 +2,9 @@ classdef ImprovedRRTAlgorithm < RRTAbstractAlgorithm
     
     methods
     
-        function obj = ImprovedRRTAlgorithm(map, stats)
+        function obj = ImprovedRRTAlgorithm(map)
             % Calls superclass constuctor
-            obj = obj@RRTAbstractAlgorithm(map, stats, "Improved RRT");
+            obj = obj@RRTAbstractAlgorithm(map, 'Improved RRT');
         end
     
     end

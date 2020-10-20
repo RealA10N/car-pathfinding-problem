@@ -3,8 +3,12 @@ classdef RRTAbstractAlgorithm < Algorithm
     
     methods
         
-        function found_path = run(obj, drawEveryStep, pauseEveryStep)
+        function statsObj = run(obj, drawEveryStep, pauseEveryStep)
             % Runs the RRT Algorithm and returns the end position.
+            
+            % Start recording stats
+            statsObj = RRTAlgorithmStats(obj);
+            statsObj.start_recording()
             
             tree = RRTNodeTree(obj, obj.map);  % Create a queue
             cur_pos = obj.carToStartingPosition();  % Get the starting position
@@ -38,11 +42,17 @@ classdef RRTAbstractAlgorithm < Algorithm
                 end
             end
             
-            found_path = cur_pos;  % Return the final path
-            disp("Path Found!")
+            path_found = obj.map.check_if_end();
             
+            hold off
             obj.map.show_path(cur_pos);
-
+            hold on
+            obj.map.teleportToStart()
+            
+            % Stops recording stats, saves and prints them!
+            statsObj.stop_recording(path_found, tree, cur_pos)
+            statsObj.print_stats()
+            
         end
     end
     

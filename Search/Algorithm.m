@@ -17,9 +17,8 @@ classdef (Abstract) Algorithm < handle
     
     methods
         
-        function obj = Algorithm(map, stats, name)
+        function obj = Algorithm(map, name)
             obj.name = name;
-            obj.stats = stats;
             obj.map = map;
             obj.driver = CarDriver(map.getCar());  % Creates the driver
         end

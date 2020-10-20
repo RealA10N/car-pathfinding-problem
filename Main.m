@@ -13,10 +13,6 @@ classdef Main < handle
         digits_after_decimal_point  % int. >= 0
         algorithm_list % Contains "algorithm" objects for
                        % every algorithm in the program
-        
-        % Search related
-        stats  % Tracks stats of the search algorithm
-
     end
     
     methods
@@ -38,19 +34,18 @@ classdef Main < handle
             
             % Set default values
             obj.digits_after_decimal_point = 0;
-            obj.stats = ForwardSearchAlgorithmStats();
             obj.user_drive = false;
             
             % Generates and returns the algorithm list, that contains all
             % the "Algorithm" subclasses.
             obj.algorithm_list = { ...
-                BreadthFirstAlgorithm(obj.map, obj.stats), ...
-                DijkstrasAlgorithm(obj.map, obj.stats), ...
-                AstarAlgorithm(obj.map, obj.stats), ...
-                RRTAlgorithm(obj.map, obj.stats), ...
-                ImprovedRRTAlgorithm(obj.map, obj.stats), ...
-                BalancedRRTAlgorithm(obj.map, obj.stats)
-                };
+                BreadthFirstAlgorithm(obj.map), ...
+                DijkstrasAlgorithm(obj.map), ...
+                AstarAlgorithm(obj.map), ...
+                RRTAlgorithm(obj.map), ...
+                ImprovedRRTAlgorithm(obj.map), ...
+                BalancedRRTAlgorithm(obj.map) ...
+            };
             
             % Generate the map
             obj.generate()
@@ -143,12 +138,17 @@ classdef Main < handle
         
         %% Search
         
-        function search(obj, drawEveryStep, pauseEveryStep)
+        function statsObj = search(obj, drawEveryStep, pauseEveryStep, algorithmIndex)
             % A function that will search a path to the end position, with
             % the given algorithm. if an algorithm isn't given, the user
             % will be displayed with a window that asks him to choose one.
             
-            algorithmObj = obj.userSelectAlgorithm();
+            if (nargin < 4)
+                % If algorithmIndex is not given
+                algorithmObj = obj.userSelectAlgorithm();
+            else
+                algorithmObj = obj.algorithm_list{algorithmIndex};
+            end
             
             if (nargin < 3)
                 % If pauseEveryStep is not given
@@ -160,7 +160,7 @@ classdef Main < handle
                 drawEveryStep = true;
             end
 
-            algorithmObj.run(drawEveryStep, pauseEveryStep); % The search operation
+            statsObj = algorithmObj.run(drawEveryStep, pauseEveryStep); % The search operation
 
         end
         
@@ -263,7 +263,7 @@ classdef Main < handle
             names = [];
             for i=1:length(obj.algorithm_list)
                 curAlgorithm = obj.algorithm_list{i};
-                curName = curAlgorithm.getAlgorithmName();
+                curName = convertCharsToStrings(curAlgorithm.getAlgorithmName());
                 names = [ names curName ];
             end
             

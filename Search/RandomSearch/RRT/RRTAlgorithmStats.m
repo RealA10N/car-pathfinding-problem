@@ -1,16 +1,15 @@
-classdef ForwardSearchAlgorithmStats < AlgorithmStats
-    % Records and displays stats about every forward search run.
-    
+classdef RRTAlgorithmStats < AlgorithmStats
+    % Records and displays stats about every RRT search run.
     
     methods
         
-        function stop_recording(obj, path_found, queue, end_pos)
+        function stop_recording(obj, path_found, tree, end_pos)
             % Stop recording, and save the run stats.
             
             stop_recording@AlgorithmStats(obj, path_found)
             obj.save_path_len(end_pos)
-            obj.save_explored_positions(queue)
-            obj.save_queued_positions(queue)         
+            obj.save_explored_positions(tree)
+            obj.save_queued_positions()         
         end
         
     end
@@ -41,14 +40,14 @@ classdef ForwardSearchAlgorithmStats < AlgorithmStats
             
         end
         
-        function save_explored_positions(obj, queue)
+        function save_explored_positions(obj, tree)
             % Calculates and saves the number of explored positions.
-            obj.explored = queue.getPulledCount();
+            obj.explored = tree.getTreeSize();
         end
         
-        function save_queued_positions(obj, queue)
-            % Calculates and saves the number of explored positions.
-            obj.queued = queue.getQueuedCount();
+        function save_queued_positions(obj)
+            % Saves NaN: No queued positions in the RRT algorithm!
+            obj.queued = NaN;
         end
     end
 

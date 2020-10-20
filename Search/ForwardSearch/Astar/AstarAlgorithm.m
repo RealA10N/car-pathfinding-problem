@@ -5,9 +5,9 @@ classdef AstarAlgorithm < ForwardSearchAlgorithm
     end
     
     methods
-        function obj = AstarAlgorithm(map, stats)
+        function obj = AstarAlgorithm(map)
             % Calls superclass constuctor
-            obj = obj@ForwardSearchAlgorithm(map, stats, "A* Search");
+            obj = obj@ForwardSearchAlgorithm(map, 'A-Star Search');
         end
         
         function position = carToPosition(obj, lastPos)

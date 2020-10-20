@@ -25,6 +25,11 @@ classdef RRTNodeTree < handle
             obj.tree_matrix = [obj.tree_matrix; positionObj.getPosition()];
         end
         
+        function n = getTreeSize(obj)
+            % Returns the number of nodes in the tree.
+            n = size(obj.tree_matrix, 1);
+        end
+        
         function nearestPosition = getNearPosition(obj, positionObj)
             % Returns the closest position to the given one in the tree.            
             
