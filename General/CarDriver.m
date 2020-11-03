@@ -20,11 +20,18 @@ classdef CarDriver
             obj.car = car;
             
             obj.directions = struct();
+            
+            % Go straight
             obj.directions.uparrow    = CarCurvedSingleMove(obj, 0, obj.one_step_jump, obj.step_division);
             obj.directions.downarrow  = CarCurvedSingleMove(obj, 0, -obj.one_step_jump, obj.step_division);
+            
+            % Rotate forwards
             obj.directions.leftarrow  = CarCurvedSingleMove(obj, obj.one_step_rot, obj.one_step_jump, obj.step_division);
             obj.directions.rightarrow = CarCurvedSingleMove(obj, -obj.one_step_rot, obj.one_step_jump, obj.step_division);
-
+            
+            % Rotate backwards
+            obj.directions.x  = CarCurvedSingleMove(obj, obj.one_step_rot, -obj.one_step_jump, obj.step_division);
+            obj.directions.z = CarCurvedSingleMove(obj, -obj.one_step_rot, -obj.one_step_jump, obj.step_division);
         end
         
         function move(obj, direction)
