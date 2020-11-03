@@ -34,13 +34,17 @@ classdef CarDriver
             obj.directions.z = CarCurvedSingleMove(obj, -obj.one_step_rot, -obj.one_step_jump, obj.step_division);
         end
         
-        function move(obj, direction)
+        function boolean = move(obj, direction)
             % will move the car in the given direction, if exsistes.
+            % If moved, returns true. Returns false if the given direction
+            % is invalid.
             
             if (isfield(obj.directions, direction))
                 obj.directions.(direction).move();
+                boolean = true;
+            else
+                boolean = false;
             end
-            
             
         end
         

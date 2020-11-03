@@ -8,6 +8,10 @@ classdef Main < handle
         driver
         map
         
+        is_recording_path = 0
+        last_recorded_path = 0
+        cur_recording_path = 0
+        
         % Defaults
         user_drive  % boolean: true if the user is controlling the car
         digits_after_decimal_point  % int. >= 0
@@ -225,6 +229,62 @@ classdef Main < handle
             obj.generate()
         end
         
+        
+        %% Record and show paths
+        
+        function record(obj)
+            % Start / stop recording the path.
+            % Path will be recorded only when the user drives the car with
+            % The `.drive` method.
+            
+            if (obj.is_recording_path)
+                obj.stop_recording()
+            else
+                obj.start_recording()                
+            end
+        end
+        
+        function start_recording(obj)
+            % Start recording the movment of the car
+            
+            if obj.is_recording_path
+                disp("You are already recording.")
+            else
+                disp("Started recording path.")
+                disp("Use the 'drive' method to drive the car.")
+                
+                obj.is_recording_path = 1;
+                obj.cur_recording_path = Path(obj.map);
+                obj.add_recording_step()
+            end
+        end
+        
+        function stop_recording(obj)
+            % Stop recording the movment of the car
+            
+            if ~obj.is_recording_path
+                disp("You are not recording.")
+            else
+                disp("Stopped recording path.")
+                disp("Use the 'show_recording' method to view recording!")
+                
+                obj.is_recording_path = 0;
+                obj.last_recorded_path = obj.cur_recording_path;
+                obj.cur_recording_path = 0;
+            end
+        end
+        
+        function show_recording(obj)
+            % Show the last recorded path, as an animation.
+            
+            if class(obj.last_recorded_path) == "Path"  % zero is init value
+                obj.last_recorded_path.show()
+            else
+                disp("No path recorded yet.")                
+            end
+            
+        end
+        
     end
 
     %% Private methods
@@ -274,8 +334,23 @@ classdef Main < handle
             % controling the car using the keyboard and presses one of the
             % keyboard buttons.
             
-            obj.driver.move(event.Key);
-            obj.generate();
+            did_move = obj.driver.move(event.Key);
+            
+            if did_move
+                obj.generate();
+                obj.add_recording_step()
+            end
+            
+        end
+        
+        function add_recording_step(obj)
+            % If currently recording the movment of the car, this method
+            % will add the current location of the car into the current
+            % path recording.
+            
+            if obj.is_recording_path
+                obj.cur_recording_path = obj.cur_recording_path.add_step();
+            end
         end
     
     end
