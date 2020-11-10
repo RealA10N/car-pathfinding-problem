@@ -29,7 +29,7 @@ classdef PathMap < Map
         end
         
         function show_path(obj, position, statsObj)
-            % Shows the postions from the start postion to the given one.
+            % Shows the positions from the start postion to the given one.
             
             base_postion = position;
             
@@ -37,14 +37,18 @@ classdef PathMap < Map
             plot(obj.car.get_shape(), 'FaceColor', '#7994fb', 'FaceAlpha', 0.5);
             
             hold on
-            position.plot_position();
+            % position.plot_position();
             obj.plot_obstacles()
             obj.plot_end()
             
             while(position.ifLastPosition())
                 position = position.lastPos;
                 plot(obj.car.get_shape(), 'FaceColor', '#f8ea79', 'EdgeColor', '#999999', 'EdgeAlpha', 0.5, 'FaceAlpha', 0.00);
-                position.plot_position();
+                
+                % Plotting the position steps, now disabled 
+                % because the car snaps to a grid.
+                % position.plot_position();
+                
                 position.teleport();
             end
             
