@@ -9,10 +9,9 @@ classdef (Abstract) Algorithm < handle
     end
     
     methods (Abstract)
-        logical = run(obj, drawEveryStep)  % A function that runs the search algorithm
-                                           % Returns a logical (true/false)
-                                           % that indecates if the algorithm
-                                           % found a path or not.
+        statsObj = run(obj, drawEveryStep)  % A function that runs the
+                                            % search algorithm and returns
+                                            % an `AlgorithmStats` object.
     end
     
     methods

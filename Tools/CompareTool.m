@@ -10,7 +10,8 @@ classdef CompareTool < Main
         
         % Configure strings
         OUTPUT_FOLDER = "CompareOutputs"
-        PATHS_OUTPUT_FOLDER = "Paths"
+        FIGURES_OUTPUT_FOLDER = "Figures"
+        VIDEOS_OUTPUT_FOLDER = "Videos"
         FIG_FILE_EXTANTION = "_figure.fig"
         PATH_FIGS_FILE_EXTANTION = "_path.fig"
         TABLE_FILE_EXTANTION = "_table.xlsx"
@@ -44,9 +45,11 @@ classdef CompareTool < Main
             % Output files will be saved in the output folder.
             
             output_folder = fullfile(obj.OUTPUT_FOLDER, obj.test_name);
-            paths_output_folder = fullfile(output_folder, obj.PATHS_OUTPUT_FOLDER);
+            figures_output_folder = fullfile(output_folder, obj.FIGURES_OUTPUT_FOLDER);
+            videos_output_folder = fullfile(output_folder, obj.VIDEOS_OUTPUT_FOLDER);
             mkdir(output_folder)
-            mkdir(paths_output_folder)
+            mkdir(figures_output_folder)
+            mkdir(videos_output_folder)
             
             % Generate a figure and save the starting position image
             obj.map.generate()
@@ -64,8 +67,8 @@ classdef CompareTool < Main
                 % Save the figure
                 alg_name = convertStringsToChars(obj.algorithm_list{i}.getAlgorithmName());
                 alg_fixed_name = alg_name(isstrprop(alg_name, 'alpha'));
-                savefig(fullfile(paths_output_folder, alg_fixed_name + obj.PATH_FIGS_FILE_EXTANTION));
-                
+                savefig(fullfile(figures_output_folder, alg_fixed_name + obj.PATH_FIGS_FILE_EXTANTION));
+                statObj.save_path_video(videos_output_folder)
             end
             
             % Save the final stats table

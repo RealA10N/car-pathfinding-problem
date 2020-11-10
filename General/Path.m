@@ -63,7 +63,7 @@ classdef Path
             obj.map.generate()
         end
         
-        function save(obj, filename)
+        function save(obj, filename, fig_title)
             % Save the path as a video file.
             
             x = obj.car.xPos;
@@ -85,12 +85,21 @@ classdef Path
                 obj.car.teleport(cur_x, cur_y, cur_rot)
                 obj.map.generate()
                 
+                if (nargin > 2)
+                    title(fig_title)
+                end
+                
                 writeVideo(v, getframe(gcf));
             end
             
             close(v)
             obj.car.teleport(x, y, r)
             obj.map.generate()
+        end
+        
+        function int = path_len(obj)
+            % Returns the length of the path.
+            int = size(obj.path_matrix, 1);
         end
         
     end

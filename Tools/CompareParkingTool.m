@@ -31,7 +31,7 @@ classdef CompareParkingTool < CompareTool
         function init_problem(obj)
             % Configure obstacles and end point.
             obj.setEnd(-90, 2, 10)
-            obj.addObstacle([0 1], [0 20])
+            obj.addObstacle([0 2], [0 20])
             obj.addObstacle([1 5], [0 7])
             obj.addObstacle([1 5], [13 20])
         end

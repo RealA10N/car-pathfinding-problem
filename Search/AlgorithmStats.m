@@ -11,6 +11,7 @@ classdef AlgorithmStats < handle
         
         %% Stats in each run
         path_found = false;
+        path_obj = NaN % `Path` object
         steps_to_finish = 0;
         explored = 0;
         queued = 0;
@@ -40,16 +41,21 @@ classdef AlgorithmStats < handle
             obj.queued = 0;
         end
             
-        function stop_recording(obj, path_found)
+        function stop_recording(obj, path_obj)
             % Called when the search is over. indecates that
             % the search was stopped was completed successfully.
-            
-            obj.path_found = path_found;
-            
-            if (nargin < 2)
-                obj.path_found = true;  % assumes that found a path
+
+            if (isa(path_obj, 'NaN'))
+                % If path not found
+                obj.path_found = false;
+                obj.steps_to_finish = NaN;
+            else
+                % If path found
+                obj.path_found = true;
+                obj.path_obj = path_obj;
+                obj.steps_to_finish = path_obj.path_len();
             end
-            
+
             if (obj.is_running)
                 obj.timer = toc(obj.timer);
                 obj.is_running = false;
@@ -74,6 +80,30 @@ classdef AlgorithmStats < handle
                         'Explored nodes', 'Queued nodes', 'Run time (s)'}, ...
             'RowNames', cellstr(obj.algorithm_name));
         
+        end
+        
+        function save_path_video(obj, path, filename)
+            % Saves the path as a `.mp4` video.
+            % Only if a path is found!
+            % To save in cwd, but with a custom name, specify path as
+            % '' (0 char string).
+
+            
+            if obj.path_found
+                
+                if (nargin < 3)
+                    expression = '\W';
+                    name = regexprep(obj.algorithm_name, expression, '_');
+                    filename = name + "_path.mp4";
+                end
+                
+                if (nargin > 1)
+                    filename = fullfile(path, filename);
+                end
+                
+                obj.path_obj.save(filename, obj.algorithm_name)
+            end
+                
         end
         
         %% Gets

@@ -44,16 +44,15 @@ classdef RRTAbstractAlgorithm < Algorithm
                 end
             end
             
-            path_found = 1;
+            path_obj = obj.map.get_path(cur_pos);
             
             % Stops recording stats, saves and prints them!
-            statsObj.stop_recording(path_found, tree, cur_pos)
+            statsObj.stop_recording(path_obj, tree)
             statsObj.print_stats()
             
             obj.map.show_path(cur_pos, statsObj);
             obj.map.teleportToStart()
-
-            
+ 
         end
     end
     

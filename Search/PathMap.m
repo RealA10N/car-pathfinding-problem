@@ -28,6 +28,25 @@ classdef PathMap < Map
             xyrotation = obj.endPoint;
         end
         
+        function path = get_path(obj, position)
+            % Returns a `Path` object that has a path saved inside it:
+            % The saved path is the path from the start position until
+            % the given position.
+            
+            
+            positions = position.getPosition();
+            
+            while(position.ifLastPosition())
+                position = position.lastPos;
+                positions = [position.getPosition(); positions];
+            end
+            
+            % Now, when the positions list is created and ordered,
+            % Will create the `Path` object.
+            path = Path(obj, positions);
+            
+        end
+        
         function show_path(obj, position, statsObj)
             % Shows the positions from the start postion to the given one.
             
