@@ -41,7 +41,7 @@ classdef RRTNodeTree < handle
             parfor i=1:length(obj.tree)
                 % For each node calculate the distance between the node and
                 % the given position
-                distances(i) = obj.parent_algorithm.twoNodesDistance(positionObj, obj.tree(i));
+                distances(i) = obj.map.twoNodesDistance(positionObj.getPosition(), obj.tree(i).getPosition());
             end
             
             [~, nearestIndex] = min(distances);

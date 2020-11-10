@@ -42,6 +42,22 @@ classdef Map < handle
             obj.obstacles = [ obj.obstacles obstacles ];
         end
         
+        function car_rand_teleport(obj)
+            % Teleports the car into a random location in the map.
+            
+            x = randi([0 obj.getSize()]);
+            y = randi([0 obj.getSize()]);
+            rot = Map.generate_random_rot(22.5);
+            
+            obj.car.teleport(x, y, rot);
+            
+            if (obj.checkDead())
+                % Generate random location again, until the found
+                % location is valid.
+                obj.car_rand_teleport()
+            end
+        end
+        
         
         function boolean = checkDead(obj)
             % Returns true if the car should be "dead".
@@ -116,7 +132,29 @@ classdef Map < handle
             hold off
             obj.fig_config()
         end
+
+        function distance = twoNodesDistance(~, p1, p2)
+            % This function recives two points arrays, when in each point
+            % array the first two elements indicates the x and y values of
+            % the point, and the last one indicates the rotation of the car
+            % in degrees (0-360)
             
+            % Calculate the difference
+            xy_vector = p1(1:2)-p2(1:2);
+            rotation = mod(p1(3)-p2(3), 360);
+            
+            % deal with rotations over 180, when the shortest path
+            % may cross 360 degrees
+            if (rotation > 180)
+                rotation = 180 - mod(rotation, 180);
+            end
+            
+            % The rotation strength in relation to the xy strength
+            rotation = rotation * 0.125;  
+            
+            % Calculating the distance using the Pythagorean Theorem
+            distance = norm([xy_vector rotation]);
+        end
     end
     
     methods (Access = protected)
@@ -175,6 +213,18 @@ classdef Map < handle
             ylim([0 obj.maxSize])
             drawnow limitrate
             
+        end
+        
+    end
+    
+    methods (Access = private, Static)
+        
+        function rot = generate_random_rot(rotation_jumps)
+            % Generates a random rotation for the car.
+            
+            options = 360 / rotation_jumps;
+            selected = randi([0 options]);
+            rot = selected * rotation_jumps;
         end
         
     end

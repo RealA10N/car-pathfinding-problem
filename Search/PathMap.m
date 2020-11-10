@@ -8,7 +8,7 @@ classdef PathMap < Map
     
     properties (Constant)
         goal_radius_xy = 1;
-        goal_radius_rotation = 10;  % in degrees
+        goal_radius_rotation = 22.25;  % in degrees
     end
     
     methods
@@ -74,7 +74,9 @@ classdef PathMap < Map
         function boolean = check_if_end(obj)
             % Returns true if the search should for the end position should
             % end.
-            boolean = obj.check_if_touching_end();
+            
+            boolean = obj.check_if_close_to_end(2);
+            % boolean = obj.check_if_touching_end();
         end
         
         function boolean = check_if_car_in_end(obj)
@@ -87,6 +89,17 @@ classdef PathMap < Map
                 boolean = all([car.xPos, car.yPos, car.Rotation] == obj.endPoint);
             end
             
+        end
+        
+        function boolean = check_if_close_to_end(obj, range)
+            % Returns true (1) if the car is close to the end position
+            % Else, returns false (0).
+            
+            car_pos = [obj.car.xPos, obj.car.yPos, obj.car.Rotation];
+            end_pos = obj.getend();
+            
+            diff = obj.twoNodesDistance(car_pos, end_pos);
+            boolean = diff <= range;
         end
         
         function boolean = check_if_touching_end(obj)

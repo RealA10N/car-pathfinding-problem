@@ -13,8 +13,9 @@ classdef RRTAbstractAlgorithm < Algorithm
             tree = RRTNodeTree(obj, obj.map);  % Create a queue
             cur_pos = obj.carToStartingPosition();  % Get the starting position
             tree.addPosition(cur_pos)  % Add the starting position to the queue
-            
-            while (~obj.map.check_if_end())  %  While path not found
+            is_dead = obj.map.checkDead();
+
+            while (~(obj.map.check_if_end() && ~is_dead))  %  While path not found
                 random_point = obj.generateRandomPoint();  % Generate a random point
                 close_node = tree.getNearPosition(random_point);  % Get the closest tree node
                 close_node.teleport()  % Teleport the car to the closest node in the tree
@@ -22,7 +23,8 @@ classdef RRTAbstractAlgorithm < Algorithm
                 cur_pos = obj.carToPosition(close_node);  % Saves the current position of the car
                 cur_pos.teleport();
                 
-                if (~obj.map.checkDead())
+                is_dead = obj.map.checkDead();
+                if (~is_dead)
                     tree.addPosition(cur_pos)  % Save the new position in the tree!
 
                     if (drawEveryStep == true)
@@ -42,7 +44,7 @@ classdef RRTAbstractAlgorithm < Algorithm
                 end
             end
             
-            path_found = obj.map.check_if_end();
+            path_found = 1;
             
             % Stops recording stats, saves and prints them!
             statsObj.stop_recording(path_found, tree, cur_pos)
@@ -80,7 +82,7 @@ classdef RRTAbstractAlgorithm < Algorithm
                 newPos = obj.carToPosition(curPos);  % Save the new position with a pointer to the last one
                 newPos.set_small_steps(x_steps, y_steps)  % Saves all of the curve vertices
                 
-                curDistance = obj.twoNodesDistance(point, newPos);  % Calculate the current distance from given point
+                curDistance = obj.map.twoNodesDistance(point.getPosition(), newPos.getPosition());  % Calculate the current distance from given point
                 
                 new_positions = [new_positions newPos];  % Save new position in the positions array
                 position_distances = [position_distances curDistance];  % Save new distance in the distances array
@@ -91,37 +93,7 @@ classdef RRTAbstractAlgorithm < Algorithm
             new_positions(min_position_index).teleport();  
         end
     end
-    
-    methods (Static)
-        function distance = twoNodesDistance(p1, p2)
-            % This function recives two points arrays, when in each point
-            % array the first two elements indicates the x and y values of
-            % the point, and the last one indicates the rotation of the car
-            % in degrees (0-360)
-            
-            % Convert position object to an array with x, y, and rotation
-            % valiues.
-            p1 = p1.getPosition();
-            p2 = p2.getPosition();
-            
-            % Calculate the difference
-            xy_vector = p1(1:2)-p2(1:2);
-            rotation = mod(p1(3)-p2(3), 360);
-            
-            % deal with rotations over 180, when the shortest path
-            % may cross 360 degrees
-            if (rotation > 180)
-                rotation = 180 - mod(rotation, 180);
-            end
-            
-            % The rotation strength in relation to the xy strength
-            rotation = rotation * 0.125;  
-            
-            % Calculating the distance using the Pythagorean Theorem
-            distance = norm([xy_vector rotation]);
-        end
-    end
-    
+
     methods (Access = private)
         function position = carToStartingPosition(obj)
             % Returns a "CarSearchPosition" object that contains the current

@@ -6,7 +6,7 @@ classdef CompareTool < Main
         test_name
     end
     
-    properties (Access = private, Constant)
+    properties (Access = protected)
         
         % Configure strings
         OUTPUT_FOLDER = "CompareOutputs"
