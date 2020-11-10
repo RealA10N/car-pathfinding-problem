@@ -285,6 +285,22 @@ classdef Main < handle
             
         end
         
+        function save_recording(obj, filename)
+            % Save the last recorded path, as a video file.
+            
+            if (nargin < 2)
+                filename = "recorded_path";
+            end
+            
+            if class(obj.last_recorded_path) == "Path"  % zero is init value
+                disp("Generating video file...")
+                obj.last_recorded_path.save(filename)
+                disp("Video file saved!")
+            else
+                disp("No path recorded yet.")                
+            end
+        end
+        
     end
 
     %% Private methods

@@ -63,6 +63,36 @@ classdef Path
             obj.map.generate()
         end
         
+        function save(obj, filename)
+            % Save the path as a video file.
+            
+            x = obj.car.xPos;
+            y = obj.car.yPos;
+            r = obj.car.Rotation;
+            
+            v = VideoWriter(filename, 'MPEG-4');
+            v.FrameRate = 1 / obj.TIME_BETWEEN_STEPS;
+            v.Quality = 100;
+            
+            open(v)
+            
+            for i=1:size(obj.path_matrix, 1)
+                cur_pos = obj.path_matrix(i, :);
+                cur_x = cur_pos(1);
+                cur_y = cur_pos(2);
+                cur_rot = cur_pos(3);
+                
+                obj.car.teleport(cur_x, cur_y, cur_rot)
+                obj.map.generate()
+                
+                writeVideo(v, getframe(gcf));
+            end
+            
+            close(v)
+            obj.car.teleport(x, y, r)
+            obj.map.generate()
+        end
+        
     end
 end
 
