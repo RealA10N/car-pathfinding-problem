@@ -42,11 +42,31 @@ classdef Map < handle
             obj.obstacles = [ obj.obstacles obstacles ];
         end
         
-        function car_rand_teleport(obj)
+        function car_rand_teleport(obj, x_range, y_range)
             % Teleports the car into a random location in the map.
+            % x_range and y_range are matrices with one row and two columns.
+            % They represent the range where the car can be teleported,
+            % For example: x_range = [0, 1] means that the car can be
+            % placed anywhere on the x axis.
             
-            x = randi([0 obj.getSize()]);
-            y = randi([0 obj.getSize()]);
+            if (nargin > 2)
+                y_start = y_range(1) * obj.getSize();
+                y_end = y_range(2) * obj.getSize();
+                y_range = [y_start, y_end];
+            else
+                y_range = [0, 1];
+            end
+            
+            if (nargin > 1)
+                x_start = x_range(1) * obj.getSize();
+                x_end = x_range(2) * obj.getSize();
+                x_range = [x_start x_end];
+            else
+                x_range = [0, 1];
+            end
+
+            x = randi(x_range);
+            y = randi(y_range);
             rot = Map.generate_random_rot(22.5);
             
             obj.car.teleport(x, y, rot);

@@ -40,7 +40,10 @@ classdef CompareParkingTool < CompareTool
             % Teleports the car into a random starting position.
             % This method should be called after the `init_problem`
             % method is called.
-            obj.map.car_rand_teleport()
+            
+            x_range = [0.5, 1];  % Allow teleport on the left half only
+            y_range = [0, 1];
+            obj.map.car_rand_teleport(x_range, y_range)
         end
         
         function name = get_unused_name_path(obj, iteration)
