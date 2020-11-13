@@ -4,10 +4,10 @@ classdef CompareParkingTool < CompareTool
     
     methods
         
-        function obj = CompareParkingTool()
+        function obj = CompareParkingTool(name)
             % Initialize the problem.
-            obj = obj@CompareTool("Placeholder-name");
-            obj.OUTPUT_FOLDER = "ParkingCompareOutputes";
+            obj = obj@CompareTool(name);
+            obj.OUTPUT_FOLDER = name;
             obj.init_problem()
         end
         
