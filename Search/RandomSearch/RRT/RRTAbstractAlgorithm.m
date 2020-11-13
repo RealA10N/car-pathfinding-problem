@@ -1,6 +1,10 @@
 classdef RRTAbstractAlgorithm < Algorithm
     % Defines the RRT algorithm in the program.
     
+    properties (Constant, Access=private)
+       TIMEOUT_IN_SECONDS = 600  % 10 minutes
+    end
+    
     methods
         
         function statsObj = run(obj, drawEveryStep, pauseEveryStep)
@@ -15,7 +19,17 @@ classdef RRTAbstractAlgorithm < Algorithm
             tree.addPosition(cur_pos)  % Add the starting position to the queue
             is_dead = obj.map.checkDead();
 
+            run_timer = tic;
+            path_found = true;
+            
             while (~(obj.map.check_if_end() && ~is_dead))  %  While path not found
+                
+                if (toc(run_timer) > obj.TIMEOUT_IN_SECONDS)
+                    % Timeout - path not found!
+                    path_found = false;
+                    break
+                end
+                
                 random_point = obj.generateRandomPoint();  % Generate a random point
                 close_node = tree.getNearPosition(random_point);  % Get the closest tree node
                 close_node.teleport()  % Teleport the car to the closest node in the tree
@@ -44,7 +58,11 @@ classdef RRTAbstractAlgorithm < Algorithm
                 end
             end
             
-            path_obj = obj.map.get_path(cur_pos);
+            if path_found
+                path_obj = obj.map.get_path(cur_pos);
+            else
+                path_obj = NaN;
+            end
             
             % Stops recording stats, saves and prints them!
             statsObj.stop_recording(path_obj, tree)

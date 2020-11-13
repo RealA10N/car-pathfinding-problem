@@ -45,7 +45,7 @@ classdef AlgorithmStats < handle
             % Called when the search is over. indecates that
             % the search was stopped was completed successfully.
 
-            if (isa(path_obj, 'NaN'))
+            if (isa(path_obj, 'double'))  % If NaN
                 % If path not found
                 obj.path_found = false;
                 obj.steps_to_finish = NaN;
