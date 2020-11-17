@@ -29,7 +29,6 @@ classdef RandomPoint < handle
     
         function position = getPosition(obj)
             % Returns the position of the random genereted point.
-            obj.generate();
             position = [obj.x obj.y obj.rotation];
         end
         

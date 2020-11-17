@@ -15,6 +15,7 @@ classdef BalancedRRTAlgorithm < RRTAbstractAlgorithm
         function random_point = generateRandomPoint(obj)
             % generated and returns a random point object
             random_point = BalancedRandomPoint(obj.map);
+            random_point.generate()
         end
         
     end

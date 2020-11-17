@@ -21,6 +21,7 @@ classdef CompareParkingTool < CompareTool
         function park_once(obj)
             obj.init_start_point();
             obj.test_name = obj.get_unused_name_path();
+            disp("Comparing " + obj.test_name + "...")
             obj.compare();
         end
         
@@ -56,7 +57,7 @@ classdef CompareParkingTool < CompareTool
             
             name = sprintf('%03d', iteration);
             path = fullfile(obj.OUTPUT_FOLDER, name);
-            disp(path)
+                        
             if (exist(path, 'dir'))
                 name = obj.get_unused_name_path(iteration + 1);
             end

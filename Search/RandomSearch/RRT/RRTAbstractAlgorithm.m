@@ -31,6 +31,7 @@ classdef RRTAbstractAlgorithm < Algorithm
                 end
                 
                 random_point = obj.generateRandomPoint();  % Generate a random point
+                random_point.generate();
                 close_node = tree.getNearPosition(random_point);  % Get the closest tree node
                 close_node.teleport()  % Teleport the car to the closest node in the tree
                 obj.stepTowardsPoint(random_point, close_node)  % Move the car one step towards the random point

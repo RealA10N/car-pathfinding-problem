@@ -105,6 +105,7 @@ classdef HistogramTool
             rand_points = zeros(num, 3);
             
             for count = 1:num
+                point.generate()
                 rand_points(count, :) = point.getPosition();
             end
             

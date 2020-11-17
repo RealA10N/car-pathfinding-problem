@@ -29,6 +29,7 @@ classdef BalancedRandomPoint < RandomPoint
                 point = ImprovedRandomPoint(obj.mapObj);
             end
             
+            point.generate()
             position = point.getPosition();
             obj.x = position(1);
             obj.y = position(2);
