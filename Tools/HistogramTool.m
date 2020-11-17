@@ -42,19 +42,31 @@ classdef HistogramTool
         
         function throw_random_points(obj, num)
             % throw 'num' random points on the map and show the histogram.
-            obj.throw_points(num, "Random")
+            point = RandomPoint(obj.map);
+            obj.throw_points(num, point);
         end
         
-        function throw_improved_points(obj, num)
+        function throw_improved_points(obj, num, beta_dist_v)
             % throw 'num' random special points on the map and show the histogram.
-            obj.throw_points(num, "Improved")
+
+            if (nargin < 3)
+                beta_dist_v = 15;  % default v value
+            end
+            
+            point = ImprovedRandomPoint(obj.map, beta_dist_v);
+            obj.throw_points(num, point);
         end
         
-        function throw_balanced_points(obj, num)
+        function throw_balanced_points(obj, num, beta_dist_v)
             % throw a mixture of random and special points on the map and show the histogram.
-            obj.throw_points(num, "Balanced")
+            
+            if (nargin < 3)
+                beta_dist_v = 15;  % default v
+            end
+            
+            point = BalancedRandomPoint(obj.map, beta_dist_v);
+            obj.throw_points(num, point);
         end
-        
     end
     
     methods (Access = private)
@@ -86,15 +98,14 @@ classdef HistogramTool
             end
         end
         
-        function throw_points(obj, num, point_string)
+        function throw_points(~, num, point)
             % Throws num amount of points onto the map.
             % The points are from the given type.
             
             rand_points = zeros(num, 3);
             
             for count = 1:num
-                cur_point = obj.string_to_point(point_string);
-                rand_points(count, :) = cur_point.getPosition();
+                rand_points(count, :) = point.getPosition();
             end
             
             hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')

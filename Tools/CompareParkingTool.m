@@ -7,7 +7,7 @@ classdef CompareParkingTool < CompareTool
         function obj = CompareParkingTool(name)
             % Initialize the problem.
             obj = obj@CompareTool(name);
-            obj.OUTPUT_FOLDER = name;
+            obj.OUTPUT_FOLDER = fullfile("ParkingCompareOutputes", name);
             obj.init_problem()
         end
         
@@ -56,7 +56,7 @@ classdef CompareParkingTool < CompareTool
             
             name = sprintf('%03d', iteration);
             path = fullfile(obj.OUTPUT_FOLDER, name);
-            
+            disp(path)
             if (exist(path, 'dir'))
                 name = obj.get_unused_name_path(iteration + 1);
             end

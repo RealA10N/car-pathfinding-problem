@@ -1,20 +1,44 @@
 classdef ImprovedRandomPoint < RandomPoint
     % when created, generates a random point on the map and saves it.
     
+    properties (Access = protected)
+        v;
+    end
+    
+    methods
+        
+        function obj = ImprovedRandomPoint(mapObj, v)
+            obj = obj@RandomPoint(mapObj);
+            
+            if (nargin < 2)
+                obj.v = 15;
+            else
+                obj.v = v;
+            end
+        end
+        
+        function generate(obj)
+            endpoint = obj.mapObj.getend();
+            % Generate random x, y and rotation            
+            obj.x = obj.getRandomPointXY(endpoint(1));
+            obj.y = obj.getRandomPointXY(endpoint(2));
+            obj.rotation = obj.getRandomPointRotation(endpoint(3));              
+        end
+    end
+    
     methods (Access=protected)
         
-        function value = getRandomPointXY(~, goal_value, mapObj)
+        function value = getRandomPointXY(obj, goal_value)
             % Returns a 'smart' random dimention of the point (x or y).
             % This size leans towards the goal point.
             
-            mu = goal_value / mapObj.getSize();
-            v = 5;
+            mu = goal_value / obj.mapObj.getSize();
             
-            beta_A = mu * v;
-            beta_B = (1 - mu) * v;
+            beta_A = mu * obj.v;
+            beta_B = (1 - mu) * obj.v;
             
             value = betarnd(beta_A, beta_B);
-            value = value * mapObj.getSize();
+            value = value * obj.mapObj.getSize();
             
         end
 
