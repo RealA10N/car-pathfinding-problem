@@ -107,9 +107,8 @@ classdef (Abstract) ForwardSearchAlgorithm < Algorithm
                 path_obj = obj.map.get_path(curPos);
             end
             
-            % Stops recording stats, saves and prints them!
+            % Stops recording stats
             statsObj.stop_recording(path_obj, queue)
-            statsObj.print_stats()
                         
             if (is_path_found)
                 % Shows the found path

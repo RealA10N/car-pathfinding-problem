@@ -65,9 +65,8 @@ classdef RRTAbstractAlgorithm < Algorithm
                 path_obj = NaN;
             end
             
-            % Stops recording stats, saves and prints them!
+            % Stops recording stats
             statsObj.stop_recording(path_obj, tree)
-            statsObj.print_stats()
             
             obj.map.show_path(cur_pos, statsObj);
             obj.map.teleportToStart()
