@@ -42,8 +42,8 @@ classdef CompareParkingTool < CompareTool
             % This method should be called after the `init_problem`
             % method is called.
             
-            x_range = [0.5, 1];  % Allow teleport on the left half only
-            y_range = [0, 1];
+            x_range = [0.5, 0.9];  % Allow teleport on the left half only
+            y_range = [0.1, 0.9];
             obj.map.car_rand_teleport(x_range, y_range)
         end
         

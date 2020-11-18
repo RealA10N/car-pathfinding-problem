@@ -2,7 +2,7 @@ classdef RRTAbstractAlgorithm < Algorithm
     % Defines the RRT algorithm in the program.
     
     properties (Constant, Access=private)
-       TIMEOUT_IN_SECONDS = 600  % 10 minutes
+       TIMEOUT_IN_SECONDS = 360  % 6 minutes
     end
     
     methods
