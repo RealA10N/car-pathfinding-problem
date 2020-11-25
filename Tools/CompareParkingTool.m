@@ -45,6 +45,7 @@ classdef CompareParkingTool < CompareTool
             x_range = [0.5, 0.9];  % Allow teleport on the left half only
             y_range = [0.1, 0.9];
             obj.map.car_rand_teleport(x_range, y_range)
+            obj.map.savestart()
         end
         
         function name = get_unused_name_path(obj, iteration)

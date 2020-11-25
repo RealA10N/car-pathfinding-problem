@@ -98,7 +98,7 @@ classdef HistogramTool
             end
         end
         
-        function throw_points(~, num, point)
+        function throw_points(obj, num, point)
             % Throws num amount of points onto the map.
             % The points are from the given type.
             
@@ -110,6 +110,8 @@ classdef HistogramTool
             end
             
             hist3([rand_points(:, 1), rand_points(:, 2)], 'CDataMode', 'auto')
+            xlim([0 obj.size])
+            ylim([0 obj.size])
             pause
             histogram(rand_points(:, 3))
             xlim([0 360])

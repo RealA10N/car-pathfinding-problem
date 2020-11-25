@@ -65,8 +65,8 @@ classdef CompareTool < Main
                 table = [table; statObj.get_stats_table()];
                 
                 % Save the figure
-                alg_name = convertStringsToChars(obj.algorithm_list{i}.getAlgorithmName());
-                alg_fixed_name = alg_name(isstrprop(alg_name, 'alpha'));
+                alg_name = obj.algorithm_list{i}.getAlgorithmName();
+                alg_fixed_name = regexprep(alg_name, '\W', '_');
                 savefig(fullfile(figures_output_folder, alg_fixed_name + obj.PATH_FIGS_FILE_EXTANTION));
                 statObj.save_path_video(videos_output_folder)
             end

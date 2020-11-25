@@ -18,6 +18,11 @@ classdef PathMap < Map
             obj.startPosition = [x y rotation];
         end
         
+        function savestart(obj)
+            % Saves the current car position as the start position
+            obj.setstart(obj.car.xPos, obj.car.yPos, obj.car.Rotation)
+        end
+        
         function setend(obj, xyrotation)
             % Sets the goal point of the search
             obj.endPoint = xyrotation;
